@@ -151,11 +151,7 @@ Then add a corresponding icon class in the CSS:
 
 ---
 
-## 📝 License
 
-This project is licensed under the MIT License 
-
----
 
 ## 🤝 Contributing
 
@@ -175,14 +171,9 @@ Contributions are welcome! Feel free to fork this repository and submit pull req
 ## 📬 Contact
 
 
-Project Link: [https://github.com/yourusername/reezma-showcase](https://github.com/reezmahanan/reezma-showcase)
+Project Link: [https://github.com/yourusername/reezma-showcase](https://github.com/reezmahanan/Reezma-tech-services.git)
 
 ---
 
-## 🙏 Acknowledgements
-
-- [CSS-Tricks](https://css-tricks.com/) - For inspiration on modern CSS techniques
-- [MDN Web Docs](https://developer.mozilla.org/) - For comprehensive CSS reference
-- [Google Fonts](https://fonts.google.com/) - For typography inspiration
 
 <p align="center"> Made with ❤️ and CSS </p>
