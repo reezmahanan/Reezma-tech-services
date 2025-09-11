@@ -1,0 +1,319 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #0b4e8d;
+    --accent: #03c6fc;
+    --dark: #0f1218;
+    --light: #f5f9ff;
+    --shadow: rgba(3, 198, 252, 0.3);
+    --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark);
+    color: var(--light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    padding: 2rem;
+}
+
+/* Header and Logo */
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.logo {
+    position: relative;
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: var(--gradient);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px var(--shadow);
+    margin-bottom: 0.8rem;
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(3, 198, 252, 0.7);
+    font-family: 'Courier New', monospace;
+}
+
+.logo-r {
+    color: var(--dark);
+}
+
+.tagline {
+    font-size: 1rem;
+    opacity: 0.8;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Card Gallery */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    width: 100%;
+    perspective: 1000px;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    transform-style: preserve-3d;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.service-card:hover {
+    transform: translateY(-15px) rotateX(5deg);
+    box-shadow: 0 15px 35px var(--shadow);
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+}
+
+.service-card:hover::before {
+    transform: scaleX(1);
+}
+
+.service-icon {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-icon::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.1) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+.icon {
+    width: 60px;
+    height: 60px;
+    background: var(--light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    z-index: 1;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.3);
+    position: relative;
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover .icon {
+    transform: translateY(-5px);
+}
+
+.service-content {
+    padding: 1.5rem;
+}
+
+.service-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+}
+
+.service-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 40px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.service-card:hover .service-title::after {
+    width: 70px;
+}
+
+.service-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+/* Features List */
+.features {
+    margin-top: 1rem;
+    list-style-type: none;
+}
+
+.feature-item {
+    padding: 0.4rem 0;
+    position: relative;
+    padding-left: 1.3rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.feature-item::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    transform: scale(0.8);
+    opacity: 0.7;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.service-card:hover .feature-item {
+    color: rgba(255, 255, 255, 0.9);
+    transform: translateX(5px);
+}
+
+.service-card:hover .feature-item::before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* CTA Button */
+.cta-btn {
+    display: inline-block;
+    margin-top: 1.2rem;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--accent);
+    z-index: -1;
+    transition: width 0.3s ease;
+}
+
+.service-card:hover .cta-btn::before {
+    width: 100%;
+}
+
+.service-card:hover .cta-btn {
+    color: var(--dark);
+}
+
+/* Background Elements */
+.bg-circle {
+    position: fixed;
+    border-radius: 50%;
+    background: var(--gradient);
+    opacity: 0.05;
+    z-index: -1;
+}
+
+.bg-circle-1 {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    left: -150px;
+}
+
+.bg-circle-2 {
+    width: 500px;
+    height: 500px;
+    bottom: -250px;
+    right: -250px;
+}
+
+/* Footer */
+.footer {
+    margin-top: 4rem;
+    text-align: center;
+    opacity: 0.7;
+    font-size: 0.85rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .services-container {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+    
+    .header {
+        margin-bottom: 2rem;
+    }
+    
+    body {
+        padding: 1rem;
+    }
+}
+
+/* Custom Icons */
+.icon-cloud::before {
+    content: '☁️';
+}
+
+.icon-security::before {
+    content: '🔒';
+}
+
+.icon-data::before {
+    content: '📊';
+}
+
+.icon-development::before {
+    content: '💻';
+}
