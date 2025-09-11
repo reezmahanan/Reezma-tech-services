@@ -57,11 +57,11 @@ Each card includes:
 
 1. **Clone this repository or download the files:**
    ```bash
-   git clone https://github.com/reezmahanan/reezma-showcase.git
+   git clone https://github.com/reezmahanan/Reezma-tech-services.git
    ```
 2. **Open the project folder:**
    ```bash
-   cd reezma-showcase
+   cd Reezma-tech-services
    ```
 3. **View the website by opening `reezma.html` in your web browser.**
 
@@ -171,7 +171,7 @@ Contributions are welcome! Feel free to fork this repository and submit pull req
 ## 📬 Contact
 
 
-Project Link: [https://github.com/yourusername/reezma-showcase](https://github.com/reezmahanan/Reezma-tech-services.git)
+Project Link: [https://github.com/reezmahanan/Reezma-tech-services.git](https://github.com/reezmahanan/Reezma-tech-services.git)
 
 ---
 
