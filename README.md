@@ -1,7 +1,7 @@
 # Reezma Tech Services Showcase
 
 <p align="center">
-  <img src="screenshots/reezma-preview.png" alt="Reezma Website Preview" width="600">
+  <img src="https://github.com/reezmahanan/Reezma-tech-services/blob/main/Screenshot%202025-09-11%20193903.png">
 </p>
 
 <p align="center">
