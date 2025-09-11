@@ -57,7 +57,7 @@ Each card includes:
 
 1. **Clone this repository or download the files:**
    ```bash
-   git clone https://github.com/yourusername/reezma-showcase.git
+   git clone https://github.com/reezmahanan/reezma-showcase.git
    ```
 2. **Open the project folder:**
    ```bash
@@ -153,7 +153,7 @@ Then add a corresponding icon class in the CSS:
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License 
 
 ---
 
@@ -174,9 +174,8 @@ Contributions are welcome! Feel free to fork this repository and submit pull req
 
 ## 📬 Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_twitter) - your.email@example.com
 
-Project Link: [https://github.com/yourusername/reezma-showcase](https://github.com/yourusername/reezma-showcase)
+Project Link: [https://github.com/yourusername/reezma-showcase](https://github.com/reezmahanan/reezma-showcase)
 
 ---
 
