@@ -1,7 +1,7 @@
 # Reezma Tech Services Showcase
 
 <p align="center">
-  <img src="https://github.com/reezmahanan/Reezma-tech-services/blob/main/Screenshot%202025-09-11%20193903.png" alt="Reezma Tech Services Preview">
+  <img src="https://github.com/reezmahanan/Reezma-tech-services/blob/main/Screenshot1.png" alt="Reezma Tech Services Preview">
 </p>
 
 <p align="center">
