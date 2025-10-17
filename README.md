@@ -77,7 +77,7 @@ Try the demo to see the template in action.
     ```bash
     # Python 3
     python -m http.server 8000
-    # then open http://localhost:8000/reezma.html
+    # then open http://localhost:8000/index.html
     ```
 - Live demo (if GitHub Pages is enabled):
   - https://reezmahanan.github.io/Reezma-tech-services/
