@@ -63,7 +63,7 @@ Each card includes:
    ```bash
    cd Reezma-tech-services
    ```
-3. **View the website by opening `reezma.html` in your web browser.**
+3. **View the website by opening `index.html` in your web browser.**
 
 ---
 
@@ -72,7 +72,7 @@ Each card includes:
 Try the demo to see the template in action.
 
 - View locally:
-  - Open `reezma.html` in your browser (double-click or via `file://` path).
+  - Open `index.html` in your browser (double-click or via `file://` path).
   - Or serve it with a simple static server:
     ```bash
     # Python 3
@@ -89,7 +89,7 @@ Try the demo to see the template in action.
 
 ```
 reezma-showcase/
-├── reezma.html         # Main HTML structure
+├── index.html         # Main HTML structure
 ├── Reezstyle.css       # All CSS styles and animations
 ├── screenshots/        # Preview images for documentation
 └── README.md           # Project documentation
