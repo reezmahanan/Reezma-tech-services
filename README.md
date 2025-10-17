@@ -1,7 +1,7 @@
 # Reezma Tech Services Showcase
 
 <p align="center">
-  <img src="https://github.com/reezmahanan/Reezma-tech-services/blob/main/Screenshot%202025-09-11%20193903.png">
+  <img src="https://github.com/reezmahanan/Reezma-tech-services/blob/main/Screenshot%202025-09-11%20193903.png" alt="Reezma Tech Services Preview">
 </p>
 
 <p align="center">
@@ -64,6 +64,24 @@ Each card includes:
    cd Reezma-tech-services
    ```
 3. **View the website by opening `reezma.html` in your web browser.**
+
+---
+
+## ▶️ Demo
+
+Try the demo to see the template in action.
+
+- View locally:
+  - Open `reezma.html` in your browser (double-click or via `file://` path).
+  - Or serve it with a simple static server:
+    ```bash
+    # Python 3
+    python -m http.server 8000
+    # then open http://localhost:8000/reezma.html
+    ```
+- Live demo (if GitHub Pages is enabled):
+  - https://reezmahanan.github.io/Reezma-tech-services/
+  - If the URL returns 404, enable GitHub Pages in the repository settings or host the files on any static hosting provider.
 
 ---
 
@@ -151,8 +169,6 @@ Then add a corresponding icon class in the CSS:
 
 ---
 
-
-
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to fork this repository and submit pull requests to enhance the functionality or design.
@@ -166,14 +182,28 @@ Contributions are welcome! Feel free to fork this repository and submit pull req
    `git push origin feature/AmazingFeature`
 5. **Open a Pull Request**
 
+If you'd like to propose larger changes or collaborate on design updates, open an issue first so we can discuss the idea.
+
+---
+
+## ⭐ If you like this project
+
+If you find this template useful, please:
+
+- Star the repository to show support
+- Fork it and make it your own
+- Open issues or pull requests with improvements or fixes
+- Share it with friends and colleagues
+
+Quick links:
+- Repository: https://github.com/reezmahanan/Reezma-tech-services
+- Star, Fork, and Contribute — your contributions are appreciated!
+
 ---
 
 ## 📬 Contact
 
+Made with ❤️ and CSS
 
-Project Link: [https://github.com/reezmahanan/Reezma-tech-services.git](https://github.com/reezmahanan/Reezma-tech-services.git)
+Project Link: https://github.com/reezmahanan/Reezma-tech-services.git
 
----
-
-
-<p align="center"> Made with ❤️ and CSS </p>
