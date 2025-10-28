@@ -14,7 +14,11 @@
 
 **Reezma Tech Services Showcase** is a lightweight, modern website template built using only HTML and CSS (no JavaScript). It features animated service cards with an elegant, tech-focused design and demonstrates advanced CSS techniques including animations, transitions, pseudo-elements, and responsive design principles.
 
-💻 This project is evolving — new sections and smart interactions coming soon!
+✨ Future updates will include JavaScript-based animations and dynamic content integration — stay tuned!  
+🚀 A full web application with complete features is also on the way!
+
+
+
 ---
 
 ## ✨ Features
