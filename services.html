@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Reezma Tech</title>
+    <link rel="stylesheet" href="Reezstyle.css?v=2">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-nav">
+                <span class="logo-bracket">&lt;</span>reezma<span class="logo-bracket">/&gt;</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="index.html#industries" class="nav-link">Industries</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Services Hero -->
+    <section class="hero-section" style="padding-top: 150px; min-height: 60vh;">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1 style="font-size: 3rem; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Our Services</h1>
+                <p class="hero-tagline">Comprehensive IT solutions tailored to your business needs</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services" style="padding: 3rem 2rem;">
+        <div class="services-wrapper">
+            <div class="services-container">
+                <!-- Cloud Solutions -->
+                <div class="service-card">
+                    <div class="service-icon">Cloud</div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Scalable cloud infrastructure and migration services for modern businesses.</p>
+                    <ul class="feature-list">
+                        <li>Cloud Migration</li>
+                        <li>Infrastructure Setup</li>
+                        <li>Cost Optimization</li>
+                        <li>24/7 Monitoring</li>
+                    </ul>
+                    <a href="login.html" class="service-btn">Get Started →</a>
+                </div>
+
+                <!-- Cybersecurity -->
+                <div class="service-card">
+                    <div class="service-icon">Security</div>
+                    <h3>Cybersecurity</h3>
+                    <p>Comprehensive security solutions to protect your digital assets.</p>
+                    <ul class="feature-list">
+                        <li>Security Audits</li>
+                        <li>Threat Detection</li>
+                        <li>Compliance Management</li>
+                        <li>Incident Response</li>
+                    </ul>
+                    <a href="login.html" class="service-btn">Get Started →</a>
+                </div>
+
+                <!-- Custom Development -->
+                <div class="service-card">
+                    <div class="service-icon">Development</div>
+                    <h3>Custom Development</h3>
+                    <p>Tailored software solutions built to your exact specifications.</p>
+                    <ul class="feature-list">
+                        <li>Web Applications</li>
+                        <li>Mobile Apps</li>
+                        <li>API Development</li>
+                        <li>System Integration</li>
+                    </ul>
+                    <a href="login.html" class="service-btn">Get Started →</a>
+                </div>
+
+                <!-- DevOps -->
+                <div class="service-card">
+                    <div class="service-icon">DevOps</div>
+                    <h3>DevOps Services</h3>
+                    <p>Streamline your development and operations workflows.</p>
+                    <ul class="feature-list">
+                        <li>CI/CD Pipeline</li>
+                        <li>Container Orchestration</li>
+                        <li>Infrastructure as Code</li>
+                        <li>Automation Tools</li>
+                    </ul>
+                    <a href="login.html" class="service-btn">Get Started →</a>
+                </div>
+
+                <!-- Data Analytics -->
+                <div class="service-card">
+                    <div class="service-icon">Analytics</div>
+                    <h3>Data Analytics</h3>
+                    <p>Transform your data into actionable business insights.</p>
+                    <ul class="feature-list">
+                        <li>Business Intelligence</li>
+                        <li>Data Visualization</li>
+                        <li>Predictive Analytics</li>
+                        <li>Machine Learning</li>
+                    </ul>
+                    <a href="login.html" class="service-btn">Get Started →</a>
+                </div>
+
+                <!-- IT Consulting -->
+                <div class="service-card">
+                    <div class="service-icon">Consulting</div>
+                    <h3>IT Consulting</h3>
+                    <p>Expert guidance for your technology strategy and roadmap.</p>
+                    <ul class="feature-list">
+                        <li>Technology Assessment</li>
+                        <li>Digital Transformation</li>
+                        <li>Architecture Design</li>
+                        <li>Best Practices</li>
+                    </ul>
+                    <a href="login.html" class="service-btn">Get Started →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .service-icon {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 1rem;
+            background: rgba(220, 20, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 1rem 0;
+            margin: 1rem 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: rgba(255, 255, 255, 0.8);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .service-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.3);
+        }
+    </style>
+
+    <script src="script.js"></script>
+</body>
+</html>
