@@ -6,11 +6,11 @@
 }
 
 :root {
-    --primary: #0b4e8d;
-    --accent: #03c6fc;
-    --dark: #0f1218;
-    --light: #f5f9ff;
-    --shadow: rgba(3, 198, 252, 0.3);
+    --primary: #8B0000;
+    --accent: #DC143C;
+    --dark: #1a0000;
+    --light: #ffffff;
+    --shadow: rgba(220, 20, 60, 0.3);
     --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     --success: #10b981;
     --error: #ef4444;
@@ -37,11 +37,27 @@ body {
 
 /* Light Theme */
 body.light-theme {
-    --dark: #f5f9ff;
-    --light: #0f1218;
-    --shadow: rgba(11, 78, 141, 0.3);
+    --dark: #ffffff;
+    --light: #1a0000;
+    --shadow: rgba(139, 0, 0, 0.3);
     background-color: var(--dark);
     color: var(--light);
+}
+
+body.light-theme .navbar {
+    background: rgba(255, 255, 255, 0.98);
+}
+
+body.light-theme .navbar.scrolled {
+    background: rgba(255, 255, 255, 1);
+}
+
+body.light-theme .nav-link {
+    color: #2d3748;
+}
+
+body.light-theme .burger-menu span {
+    background: #2d3748;
 }
 
 body.light-theme .service-card,
@@ -74,7 +90,7 @@ body.light-theme .contact-form-wrapper {
 .loader-spinner {
     width: 50px;
     height: 50px;
-    border: 4px solid rgba(3, 198, 252, 0.1);
+    border: 4px solid rgba(220, 20, 60, 0.1);
     border-top-color: var(--accent);
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -133,16 +149,37 @@ body.light-theme .contact-form-wrapper {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(15, 18, 24, 0.8);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
     padding: 1rem 2rem;
     z-index: 1000;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .navbar.scrolled {
-    background: rgba(15, 18, 24, 0.95);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.navbar.scrolled .nav-link {
+    color: #2d3748;
+}
+
+.navbar.scrolled .nav-link:hover {
+    color: var(--accent);
+}
+
+.navbar.scrolled .logo-nav {
+    color: var(--accent);
+}
+
+.navbar.scrolled .logo-bracket {
+    color: var(--accent);
+}
+
+.navbar.scrolled .burger-menu span {
+    background: #2d3748;
 }
 
 .nav-container {
@@ -158,7 +195,7 @@ body.light-theme .contact-form-wrapper {
     font-size: 1.5rem;
     font-weight: 700;
     font-family: 'Courier New', monospace;
-    color: var(--light);
+    color: var(--accent);
 }
 
 .logo-bracket {
@@ -173,7 +210,7 @@ body.light-theme .contact-form-wrapper {
 }
 
 .nav-link {
-    color: var(--light);
+    color: #2d3748;
     text-decoration: none;
     font-weight: 500;
     position: relative;
@@ -200,7 +237,7 @@ body.light-theme .contact-form-wrapper {
 }
 
 .theme-toggle {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(220, 20, 60, 0.1);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -225,7 +262,7 @@ body.light-theme .contact-form-wrapper {
 .burger-menu span {
     width: 25px;
     height: 3px;
-    background: var(--light);
+    background: #2d3748;
     transition: all 0.3s ease;
 }
 
@@ -250,7 +287,7 @@ body.light-theme .contact-form-wrapper {
     justify-content: center;
     padding: 100px 2rem 4rem;
     position: relative;
-    background: linear-gradient(135deg, rgba(11, 78, 141, 0.1) 0%, rgba(3, 198, 252, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, rgba(220, 20, 60, 0.1) 100%);
 }
 
 .hero-container {
@@ -308,7 +345,7 @@ body.light-theme .contact-form-wrapper {
     font-weight: 700;
     color: white;
     letter-spacing: 2px;
-    text-shadow: 0 0 10px rgba(3, 198, 252, 0.7);
+    text-shadow: 0 0 10px rgba(220, 20, 60, 0.7);
     font-family: 'Courier New', monospace;
 } 2rem;
     min-height: 1.5em;
@@ -365,7 +402,7 @@ body.light-theme .contact-form-wrapper {
 .ripple {
     position: absolute;
     border-radius: 50%;
-    background: rgba(3, 198, 252, 0.3);
+    background: rgba(220, 20, 60, 0.3);
     transform: scale(0);
     animation: ripple-animation 0.6s ease-out;
     pointer-events: none;
@@ -434,7 +471,7 @@ body.light-theme .contact-form-wrapper {
     border-radius: 16px;
     padding: 2.5rem 2rem;
     text-align: center;
-    border: 1px solid rgba(3, 198, 252, 0.1);
+    border: 1px solid rgba(220, 20, 60, 0.1);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     opacity: 0;
     transform: translateY(30px);
@@ -917,7 +954,7 @@ body.light-theme .contact-form-wrapper {
 .contact-item:hover {
     background: rgba(255, 255, 255, 0.06);
     transform: translateX(8px);
-    box-shadow: 0 5px 20px rgba(3, 198, 252, 0.2);
+    box-shadow: 0 5px 20px rgba(220, 20, 60, 0.2);
 }
 
 .contact-icon {
@@ -958,7 +995,7 @@ body.light-theme .contact-form-wrapper {
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(3, 198, 252, 0.3);
+    border: 2px solid rgba(220, 20, 60, 0.3);
     border-radius: 50%;
     font-size: 1.5rem;
     text-decoration: none;
@@ -977,7 +1014,7 @@ body.light-theme .contact-form-wrapper {
     background: rgba(255, 255, 255, 0.03);
     padding: 2.5rem;
     border-radius: 16px;
-    border: 1px solid rgba(3, 198, 252, 0.1);
+    border: 1px solid rgba(220, 20, 60, 0.1);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -1163,7 +1200,7 @@ body.light-theme .contact-form-wrapper {
 }
 
 .modal-pricing {
-    background: rgba(3, 198, 252, 0.1);
+    background: rgba(220, 20, 60, 0.1);
     padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1.5rem;
@@ -1285,7 +1322,7 @@ body.light-theme .contact-form-wrapper {
         left: -100%;
         width: 100%;
         height: calc(100vh - 70px);
-        background: rgba(15, 18, 24, 0.98);
+        background: rgba(255, 255, 255, 0.98);
         flex-direction: column;
         justify-content: flex-start;
         padding: 2rem;
@@ -1392,7 +1429,7 @@ body.light-theme .contact-form-wrapper {
 
 .testimonial-card {
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(3, 198, 252, 0.1);
+    border: 1px solid rgba(220, 20, 60, 0.1);
     border-radius: 16px;
     padding: 2rem;
     transition: all 0.3s ease;
@@ -1406,7 +1443,7 @@ body.light-theme .contact-form-wrapper {
     top: -20px;
     left: 20px;
     font-size: 8rem;
-    color: rgba(3, 198, 252, 0.1);
+    color: rgba(220, 20, 60, 0.1);
     font-family: Georgia, serif;
 }
 
@@ -1476,7 +1513,7 @@ body.light-theme .contact-form-wrapper {
 
 .pricing-card {
     background: rgba(255, 255, 255, 0.03);
-    border: 2px solid rgba(3, 198, 252, 0.2);
+    border: 2px solid rgba(220, 20, 60, 0.2);
     border-radius: 20px;
     padding: 2.5rem;
     position: relative;
@@ -1491,7 +1528,7 @@ body.light-theme .contact-form-wrapper {
 
 .pricing-card.featured {
     border-color: var(--accent);
-    background: rgba(3, 198, 252, 0.05);
+    background: rgba(220, 20, 60, 0.05);
     transform: scale(1.05);
 }
 
@@ -1672,7 +1709,7 @@ body.light-theme .contact-form-wrapper {
 
 .btn-cta-nav:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(3, 198, 252, 0.4);
+    box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
 }
 
 .nav-dropdown {
@@ -1701,7 +1738,7 @@ body.light-theme .contact-form-wrapper {
     min-width: 220px;
     background: rgba(10, 25, 47, 0.98);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(3, 198, 252, 0.2);
+    border: 1px solid rgba(220, 20, 60, 0.2);
     border-radius: 12px;
     padding: 1rem 0;
     margin-top: 0.5rem;
@@ -1729,7 +1766,7 @@ body.light-theme .contact-form-wrapper {
 }
 
 .dropdown-menu a:hover {
-    background: rgba(3, 198, 252, 0.1);
+    background: rgba(220, 20, 60, 0.1);
     color: var(--accent);
     padding-left: 2rem;
 }
@@ -1754,7 +1791,7 @@ body.light-theme .contact-form-wrapper {
     letter-spacing: 1px;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid rgba(3, 198, 252, 0.3);
+    border-bottom: 2px solid rgba(220, 20, 60, 0.3);
 }
 
 .mega-menu-column a {
@@ -1786,7 +1823,7 @@ body.light-theme .contact-form-wrapper {
 
 .industry-card {
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(3, 198, 252, 0.2);
+    border: 1px solid rgba(220, 20, 60, 0.2);
     border-radius: 16px;
     padding: 2rem;
     transition: all 0.4s ease;
@@ -1801,7 +1838,7 @@ body.light-theme .contact-form-wrapper {
     right: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(3, 198, 252, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220, 20, 60, 0.1) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
 }
@@ -1813,14 +1850,14 @@ body.light-theme .contact-form-wrapper {
 .industry-card:hover {
     transform: translateY(-10px);
     border-color: var(--accent);
-    box-shadow: 0 15px 40px rgba(3, 198, 252, 0.2);
+    box-shadow: 0 15px 40px rgba(220, 20, 60, 0.2);
 }
 
 .industry-icon {
     font-size: 3.5rem;
     margin-bottom: 1rem;
     display: inline-block;
-    filter: drop-shadow(0 0 10px rgba(3, 198, 252, 0.5));
+    filter: drop-shadow(0 0 10px rgba(220, 20, 60, 0.5));
 }
 
 .industry-card h3 {
@@ -1878,7 +1915,7 @@ body.light-theme .contact-form-wrapper {
 
 .case-study-card {
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(3, 198, 252, 0.1);
+    border: 1px solid rgba(220, 20, 60, 0.1);
     border-radius: 20px;
     overflow: hidden;
     transition: all 0.4s ease;
@@ -1886,7 +1923,7 @@ body.light-theme .contact-form-wrapper {
 
 .case-study-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 50px rgba(3, 198, 252, 0.2);
+    box-shadow: 0 20px 50px rgba(220, 20, 60, 0.2);
 }
 
 .case-study-image {
@@ -2000,7 +2037,7 @@ body.light-theme .contact-form-wrapper {
 
 .partner-card {
     background: rgba(255, 255, 255, 0.03);
-    border: 2px solid rgba(3, 198, 252, 0.15);
+    border: 2px solid rgba(220, 20, 60, 0.15);
     border-radius: 16px;
     padding: 2.5rem 2rem;
     text-align: center;
@@ -2010,8 +2047,8 @@ body.light-theme .contact-form-wrapper {
 .partner-card:hover {
     transform: translateY(-5px);
     border-color: var(--accent);
-    box-shadow: 0 10px 30px rgba(3, 198, 252, 0.2);
-    background: rgba(3, 198, 252, 0.05);
+    box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+    background: rgba(220, 20, 60, 0.05);
 }
 
 .partner-logo {
@@ -2051,7 +2088,7 @@ body.light-theme .contact-form-wrapper {
 
 .cert-card {
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(3, 198, 252, 0.2);
+    border: 1px solid rgba(220, 20, 60, 0.2);
     border-radius: 16px;
     padding: 2rem;
     text-align: center;
@@ -2061,7 +2098,7 @@ body.light-theme .contact-form-wrapper {
 .cert-card:hover {
     transform: scale(1.05);
     border-color: var(--accent);
-    box-shadow: 0 10px 30px rgba(3, 198, 252, 0.2);
+    box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
 }
 
 .cert-icon {
@@ -2107,7 +2144,7 @@ body.light-theme .contact-form-wrapper {
     text-align: center;
     padding: 2rem;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(3, 198, 252, 0.2);
+    border: 1px solid rgba(220, 20, 60, 0.2);
     border-radius: 16px;
     transition: all 0.3s ease;
 }
@@ -2115,7 +2152,7 @@ body.light-theme .contact-form-wrapper {
 .global-stat:hover {
     transform: translateY(-5px);
     border-color: var(--accent);
-    box-shadow: 0 10px 30px rgba(3, 198, 252, 0.2);
+    box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
 }
 
 .global-stat-icon {
@@ -2143,7 +2180,7 @@ body.light-theme .contact-form-wrapper {
 
 .office-card {
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(3, 198, 252, 0.2);
+    border: 1px solid rgba(220, 20, 60, 0.2);
     border-radius: 16px;
     padding: 2rem;
     transition: all 0.3s ease;
@@ -2206,8 +2243,8 @@ body.light-theme .contact-form-wrapper {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(3, 198, 252, 0.1);
-    border: 1px solid rgba(3, 198, 252, 0.3);
+    background: rgba(220, 20, 60, 0.1);
+    border: 1px solid rgba(220, 20, 60, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2220,7 +2257,7 @@ body.light-theme .contact-form-wrapper {
 .footer-social a:hover {
     background: var(--gradient);
     transform: translateY(-3px);
-    box-shadow: 0 5px 20px rgba(3, 198, 252, 0.4);
+    box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
 }
 
 /* ==========================================

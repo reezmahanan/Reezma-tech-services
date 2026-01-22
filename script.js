@@ -296,23 +296,8 @@ function initNavigation() {
         });
     });
     
-    // Navbar scroll effect
-    let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
-    
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            navbar.style.boxShadow = '0 5px 30px rgba(0, 0, 0, 0.3)';
-            navbar.style.background = 'rgba(10, 25, 47, 0.95)';
-        } else {
-            navbar.style.boxShadow = '';
-            navbar.style.background = '';
-        }
-        
-        lastScroll = currentScroll;
-    });
+    // Navbar scroll effect handled by updateNavigationOnScroll function
+    // The scrolled class is already added in that function
 }
 
 // ==========================================
