@@ -1174,7 +1174,7 @@ body.light-theme .contact-form-wrapper {
     width: auto;
     align-self: center;
     padding: 1rem 4rem;
-    background: #2c1654;
+    background: #8B0000;
     color: #ffffff;
     font-size: 1rem;
     font-weight: 500;
@@ -1186,9 +1186,9 @@ body.light-theme .contact-form-wrapper {
 }
 
 .submit-btn:hover {
-    background: #3d1f73;
+    background: #DC143C;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(44, 22, 84, 0.3);
+    box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
 }
 
 .submit-btn:disabled {
