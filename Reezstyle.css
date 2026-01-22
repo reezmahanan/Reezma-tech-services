@@ -309,18 +309,52 @@ body.light-theme .contact-form-wrapper {
     animation: fadeIn 1s ease forwards;
 }
 
+.hero-badge {
+    display: inline-block;
+    background: rgba(220, 20, 60, 0.1);
+    color: var(--accent);
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(220, 20, 60, 0.3);
+}
+
 .logo-hero {
     margin-bottom: 2rem;
 }
 
+.logo-text {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+    font-family: 'Courier New', monospace;
+    margin: 0;
+}
+
+.logo-r {
+    color: var(--accent);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 1.5rem 0;
+    color: var(--light);
+    line-height: 1.2;
+}
+
 .hero-tagline {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     opacity: 0.9;
-    max-width: 700px;
-    margin: 0 auto 2.5rem;
-    min-height: 1.5em;
+    max-width: 800px;
+    margin: 0 auto 3rem;
     line-height: 1.6;
     padding: 0 1rem;
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .typing-text {
@@ -781,39 +815,92 @@ max-width: 100%;
 /* CTA Button */
 .cta-btn {
     display: inline-block;
-    margin-top: 1.2rem;
-    padding: 0.6rem 1.2rem;
+    padding: 1rem 2.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+}
+
+.primary-btn {
+    background: var(--gradient);
+    color: white;
+    border: 2px solid transparent;
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(220, 20, 60, 0.4);
+}
+
+.secondary-btn {
     background: transparent;
     border: 2px solid var(--accent);
     color: var(--accent);
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    transition: color 0.3s ease;
 }
 
-.cta-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
+.secondary-btn:hover {
     background: var(--accent);
-    z-index: -1;
-    transition: width 0.3s ease;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(220, 20, 60, 0.3);
 }
 
-.service-card:hover .cta-btn::before {
-    width: 100%;
+.hero-trust {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
 }
 
-.service-card:hover .cta-btn {
-    color: var(--dark);
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.trust-icon {
+    color: var(--accent);
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0.7;
+}
+
+.hero-scroll-indicator span {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.scroll-arrow {
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
 }
 
 /* Background Elements */
@@ -1368,7 +1455,11 @@ max-width: 100%;
     }
 
     .hero-tagline {
-        font-size: 1.1rem;
+        font-size: 1.25rem;
+    }
+    
+    .logo-text {
+        font-size: 3.5rem;
     }
 
     .contact-form-container {
@@ -1519,11 +1610,32 @@ max-width: 100%;
 
 /* Medium Tablet - 640px */
 @media screen and (max-width: 640px) {
+    .hero-section {
+        padding: 100px 1.5rem 2.5rem;
+    }
+    
     .hero-title {
-        font-size: 2rem;
+        font-size: 2.25rem;
     }
 
     .hero-tagline {
+        font-size: 1.15rem;
+    }
+    
+    .logo-text {
+        font-size: 3rem;
+    }
+    
+    .hero-cta .cta-btn {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+    }
+    
+    .hero-trust {
+        gap: 2rem;
+    }
+    
+    .trust-item {
         font-size: 0.95rem;
     }
 
@@ -1584,22 +1696,31 @@ max-width: 100%;
         padding: 90px 1rem 2rem;
     }
 
+    .logo-text {
+        font-size: 2.5rem;
+    }
+
     .hero-title {
         font-size: 1.85rem;
         margin-bottom: 1rem;
     }
 
     .hero-tagline {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         margin-bottom: 1.5rem;
     }
 
     .hero-cta {
-        gap: 0.75rem;
+        gap: 1rem;
     }
 
     .hero-cta .cta-btn {
-        padding: 0.875rem 1.5rem;
+        padding: 0.875rem 1.75rem;
+        font-size: 0.95rem;
+    }
+    
+    .hero-trust {
+        gap: 1.5rem;
         font-size: 0.9rem;
     }
 
