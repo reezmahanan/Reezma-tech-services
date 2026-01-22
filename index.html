@@ -28,11 +28,71 @@
             </div>
             <div class="nav-menu">
                 <a href="#home" class="nav-link">Home</a>
-                <a href="#services" class="nav-link">Services</a>
-                <a href="#about" class="nav-link">About</a>
+                
+                <!-- Services Dropdown -->
+                <div class="nav-dropdown">
+                    <a href="#services" class="nav-link dropdown-toggle">Services <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu mega-menu">
+                        <div class="mega-menu-content">
+                            <div class="mega-menu-column">
+                                <h4>Core Services</h4>
+                                <a href="#services">Cloud Solutions</a>
+                                <a href="#services">Cybersecurity</a>
+                                <a href="#services">Data Analytics</a>
+                                <a href="#services">Development</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Consulting</h4>
+                                <a href="#services">IT Strategy</a>
+                                <a href="#services">Digital Transformation</a>
+                                <a href="#services">Process Automation</a>
+                                <a href="#services">Business Intelligence</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Managed Services</h4>
+                                <a href="#services">Infrastructure Management</a>
+                                <a href="#services">Application Support</a>
+                                <a href="#services">Network Operations</a>
+                                <a href="#services">24/7 Monitoring</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Industries Dropdown -->
+                <div class="nav-dropdown">
+                    <a href="#industries" class="nav-link dropdown-toggle">Industries <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="#industries">Healthcare</a>
+                        <a href="#industries">Financial Services</a>
+                        <a href="#industries">Manufacturing</a>
+                        <a href="#industries">Retail & E-commerce</a>
+                        <a href="#industries">Education</a>
+                        <a href="#industries">Government</a>
+                    </div>
+                </div>
+                
+                <!-- About Dropdown -->
+                <div class="nav-dropdown">
+                    <a href="#about" class="nav-link dropdown-toggle">About <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="#about">Company Overview</a>
+                        <a href="#case-studies">Case Studies</a>
+                        <a href="#partners">Technology Partners</a>
+                        <a href="#certifications">Certifications</a>
+                        <a href="#global-presence">Global Presence</a>
+                    </div>
+                </div>
+                
+                <!-- Resources -->
+                <a href="#resources" class="nav-link">Resources</a>
+                
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <button class="theme-toggle" data-tooltip="Toggle theme" aria-label="Toggle theme">🌙</button>
+            <div class="nav-actions">
+                <button class="theme-toggle" data-tooltip="Toggle theme" aria-label="Toggle theme">🌙</button>
+                <a href="#contact" class="btn-cta-nav">Get Started</a>
+            </div>
             <div class="burger-menu">
                 <span></span>
                 <span></span>
@@ -239,8 +299,319 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing-section" id="pricing">
+    <!-- Industries Section -->
+    <section class="industries-section" id="industries">
+        <div class="industries-container">
+            <h2 class="section-title">Industries We Serve</h2>
+            <p class="section-subtitle">Delivering tailored technology solutions across diverse sectors</p>
+            
+            <div class="industries-grid">
+                <div class="industry-card">
+                    <div class="industry-icon">🏥</div>
+                    <h3>Healthcare</h3>
+                    <p>HIPAA-compliant solutions for hospitals, clinics, and telemedicine platforms with advanced data security.</p>
+                    <ul class="industry-features">
+                        <li>Electronic Health Records</li>
+                        <li>Patient Management Systems</li>
+                        <li>Telemedicine Solutions</li>
+                    </ul>
+                </div>
+                
+                <div class="industry-card">
+                    <div class="industry-icon">🏦</div>
+                    <h3>Financial Services</h3>
+                    <p>Secure banking, fintech, and insurance solutions with real-time fraud detection and compliance.</p>
+                    <ul class="industry-features">
+                        <li>Core Banking Systems</li>
+                        <li>Payment Processing</li>
+                        <li>Risk Management</li>
+                    </ul>
+                </div>
+                
+                <div class="industry-card">
+                    <div class="industry-icon">🏭</div>
+                    <h3>Manufacturing</h3>
+                    <p>IoT-enabled smart manufacturing with predictive maintenance and supply chain optimization.</p>
+                    <ul class="industry-features">
+                        <li>Industry 4.0 Solutions</li>
+                        <li>Supply Chain Management</li>
+                        <li>Quality Control Automation</li>
+                    </ul>
+                </div>
+                
+                <div class="industry-card">
+                    <div class="industry-icon">🛒</div>
+                    <h3>Retail & E-commerce</h3>
+                    <p>Omnichannel retail platforms with AI-powered personalization and inventory management.</p>
+                    <ul class="industry-features">
+                        <li>E-commerce Platforms</li>
+                        <li>POS Systems</li>
+                        <li>Customer Analytics</li>
+                    </ul>
+                </div>
+                
+                <div class="industry-card">
+                    <div class="industry-icon">🎓</div>
+                    <h3>Education</h3>
+                    <p>Learning management systems and virtual classrooms with interactive content delivery.</p>
+                    <ul class="industry-features">
+                        <li>LMS Platforms</li>
+                        <li>Student Information Systems</li>
+                        <li>Online Assessment Tools</li>
+                    </ul>
+                </div>
+                
+                <div class="industry-card">
+                    <div class="industry-icon">🏛️</div>
+                    <h3>Government</h3>
+                    <p>Citizen services and e-governance solutions with high security and transparency standards.</p>
+                    <ul class="industry-features">
+                        <li>Digital Government Services</li>
+                        <li>Public Safety Systems</li>
+                        <li>Smart City Solutions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section class="case-studies-section" id="case-studies">
+        <div class="case-studies-container">
+            <h2 class="section-title">Success Stories</h2>
+            <p class="section-subtitle">Real results for real businesses</p>
+            
+            <div class="case-studies-grid">
+                <div class="case-study-card">
+                    <div class="case-study-image">
+                        <div class="case-study-badge">Cloud Migration</div>
+                    </div>
+                    <div class="case-study-content">
+                        <h3>Global Bank Digital Transformation</h3>
+                        <p class="case-study-client">Leading Financial Institution | 50,000+ Employees</p>
+                        <p class="case-study-desc">Migrated legacy systems to cloud infrastructure, reducing operational costs by 45% while improving transaction speed by 300%.</p>
+                        <div class="case-study-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">45%</span>
+                                <span class="stat-label">Cost Reduction</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">300%</span>
+                                <span class="stat-label">Speed Increase</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">6 months</span>
+                                <span class="stat-label">Timeline</span>
+                            </div>
+                        </div>
+                        <a href="#" class="case-study-link">Read Full Story →</a>
+                    </div>
+                </div>
+                
+                <div class="case-study-card">
+                    <div class="case-study-image">
+                        <div class="case-study-badge">Cybersecurity</div>
+                    </div>
+                    <div class="case-study-content">
+                        <h3>Healthcare Provider Security Overhaul</h3>
+                        <p class="case-study-client">Regional Hospital Network | 20+ Facilities</p>
+                        <p class="case-study-desc">Implemented comprehensive security framework achieving HIPAA compliance and preventing 99.9% of security threats.</p>
+                        <div class="case-study-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">99.9%</span>
+                                <span class="stat-label">Threat Prevention</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">100%</span>
+                                <span class="stat-label">Compliance</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">4 months</span>
+                                <span class="stat-label">Timeline</span>
+                            </div>
+                        </div>
+                        <a href="#" class="case-study-link">Read Full Story →</a>
+                    </div>
+                </div>
+                
+                <div class="case-study-card">
+                    <div class="case-study-image">
+                        <div class="case-study-badge">Data Analytics</div>
+                    </div>
+                    <div class="case-study-content">
+                        <h3>Retail Chain Analytics Platform</h3>
+                        <p class="case-study-client">National Retail Chain | 500+ Stores</p>
+                        <p class="case-study-desc">Built AI-powered analytics platform increasing revenue by 28% through predictive inventory and personalized marketing.</p>
+                        <div class="case-study-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">28%</span>
+                                <span class="stat-label">Revenue Growth</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">35%</span>
+                                <span class="stat-label">Inventory Efficiency</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">8 months</span>
+                                <span class="stat-label">Timeline</span>
+                            </div>
+                        </div>
+                        <a href="#" class="case-study-link">Read Full Story →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Partners Section -->
+    <section class="partners-section" id="partners">
+        <div class="partners-container">
+            <h2 class="section-title">Technology Partners</h2>
+            <p class="section-subtitle">Collaborating with industry leaders to deliver excellence</p>
+            
+            <div class="partners-grid">
+                <div class="partner-card">
+                    <div class="partner-logo">AWS</div>
+                    <p>Advanced Consulting Partner</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">Microsoft Azure</div>
+                    <p>Gold Partner</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">Google Cloud</div>
+                    <p>Premier Partner</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">Salesforce</div>
+                    <p>Platinum Partner</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">Oracle</div>
+                    <p>Gold Partner</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">IBM</div>
+                    <p>Business Partner</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">SAP</div>
+                    <p>Silver Partner</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo">Cisco</div>
+                    <p>Select Partner</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications & Awards Section -->
+    <section class="certifications-section" id="certifications">
+        <div class="certifications-container">
+            <h2 class="section-title">Certifications & Recognition</h2>
+            <p class="section-subtitle">Maintaining the highest industry standards</p>
+            
+            <div class="certifications-grid">
+                <div class="cert-card">
+                    <div class="cert-icon">🏆</div>
+                    <h4>ISO 27001:2022</h4>
+                    <p>Information Security Management</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">✅</div>
+                    <h4>ISO 9001:2015</h4>
+                    <p>Quality Management Systems</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🔒</div>
+                    <h4>SOC 2 Type II</h4>
+                    <p>Security & Compliance</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">⚕️</div>
+                    <h4>HIPAA Compliant</h4>
+                    <p>Healthcare Data Protection</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">💳</div>
+                    <h4>PCI DSS</h4>
+                    <p>Payment Card Security</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🌍</div>
+                    <h4>GDPR Compliant</h4>
+                    <p>Data Privacy Standards</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">⭐</div>
+                    <h4>Gartner Leader</h4>
+                    <p>Magic Quadrant 2025</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🥇</div>
+                    <h4>Top IT Services</h4>
+                    <p>Industry Awards 2025</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Presence Section -->
+    <section class="global-presence-section" id="global-presence">
+        <div class="global-container">
+            <h2 class="section-title">Global Presence</h2>
+            <p class="section-subtitle">Delivering services across 6 continents with 24/7 support</p>
+            
+            <div class="global-stats">
+                <div class="global-stat">
+                    <div class="global-stat-icon">🌎</div>
+                    <h3>50+</h3>
+                    <p>Countries Served</p>
+                </div>
+                <div class="global-stat">
+                    <div class="global-stat-icon">🏢</div>
+                    <h3>25</h3>
+                    <p>Global Offices</p>
+                </div>
+                <div class="global-stat">
+                    <div class="global-stat-icon">👥</div>
+                    <h3>5,000+</h3>
+                    <p>Team Members</p>
+                </div>
+                <div class="global-stat">
+                    <div class="global-stat-icon">🕐</div>
+                    <h3>24/7</h3>
+                    <p>Support Available</p>
+                </div>
+            </div>
+            
+            <div class="offices-grid">
+                <div class="office-card">
+                    <h4>🇺🇸 North America</h4>
+                    <p><strong>Headquarters:</strong> New York, USA</p>
+                    <p>Additional offices in San Francisco, Toronto, Mexico City</p>
+                </div>
+                <div class="office-card">
+                    <h4>🇬🇧 Europe</h4>
+                    <p><strong>Regional HQ:</strong> London, UK</p>
+                    <p>Additional offices in Frankfurt, Paris, Amsterdam</p>
+                </div>
+                <div class="office-card">
+                    <h4>🇮🇳 Asia Pacific</h4>
+                    <p><strong>Regional HQ:</strong> Singapore</p>
+                    <p>Additional offices in Mumbai, Tokyo, Sydney</p>
+                </div>
+                <div class="office-card">
+                    <h4>🇦🇪 Middle East & Africa</h4>
+                    <p><strong>Regional HQ:</strong> Dubai, UAE</p>
+                    <p>Additional offices in Johannesburg, Nairobi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->\n    <section class="pricing-section" id="pricing">
         <div class="pricing-container">
             <h2 class="section-title">Flexible Pricing Plans</h2>
             <p class="section-subtitle">Choose the perfect plan for your business needs</p>
@@ -431,10 +802,63 @@
                     <li><a href="#" onclick="ReezmaApp.openServiceModal('Development'); return false;">Development</a></li>
                 </ul>
             </div>
+            <div class="footer-section">
+                <h3>Industries</h3>
+                <ul>
+                    <li><a href="#industries">Healthcare</a></li>
+                    <li><a href="#industries">Financial Services</a></li>
+                    <li><a href="#industries">Manufacturing</a></li>
+                    <li><a href="#industries">Retail & E-commerce</a></li>
+                    <li><a href="#industries">Education</a></li>
+                    <li><a href="#industries">Government</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#case-studies">Case Studies</a></li>
+                    <li><a href="#partners">Partners</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#global-presence">Global Offices</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">News & Events</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Whitepapers</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Webinars</a></li>
+                    <li><a href="#">Support Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Security</a></li>
+                    <li><a href="#">Compliance</a></li>
+                </ul>
+            </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Reezma Tech. All rights reserved.</p>
-            <p class="footer-made">Made with <span class="heart">❤️</span> by Reezma</p>
+            <div class="footer-bottom-left">
+                <p>&copy; 2026 Reezma Tech. All rights reserved.</p>
+                <p class="footer-made">Made with <span class="heart">❤️</span> by Reezma</p>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="LinkedIn">in</a>
+                <a href="#" aria-label="Twitter">𝕏</a>
+                <a href="#" aria-label="Facebook">f</a>
+                <a href="#" aria-label="YouTube">▶</a>
+                <a href="#" aria-label="Instagram">📷</a>
+            </div>
         </div>
     </footer>
 

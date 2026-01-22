@@ -264,6 +264,55 @@ function initNavigation() {
             });
         });
     }
+    
+    // Mobile dropdown toggle
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const dropdown = toggle.closest('.nav-dropdown');
+                dropdown.classList.toggle('active');
+            }
+        });
+    });
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#' && href.length > 1) {
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    const navHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight - 20;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+    
+    // Navbar scroll effect
+    let lastScroll = 0;
+    const navbar = document.querySelector('.navbar');
+    
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+            navbar.style.boxShadow = '0 5px 30px rgba(0, 0, 0, 0.3)';
+            navbar.style.background = 'rgba(10, 25, 47, 0.95)';
+        } else {
+            navbar.style.boxShadow = '';
+            navbar.style.background = '';
+        }
+        
+        lastScroll = currentScroll;
+    });
 }
 
 // ==========================================
@@ -629,6 +678,94 @@ function initTestimonialAnimations() {
         testimonialCards.forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    }
+    
+    // Industry cards animation
+    const industryCards = document.querySelectorAll('.industry-card');
+    if (industryCards.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0) scale(1)';
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        industryCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px) scale(0.95)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    }
+    
+    // Case study cards animation
+    const caseStudyCards = document.querySelectorAll('.case-study-card');
+    if (caseStudyCards.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0)';
+                    }, index * 150);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        caseStudyCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = index % 2 === 0 ? 'translateX(-50px)' : 'translateX(50px)';
+            card.style.transition = 'all 0.8s ease';
+            observer.observe(card);
+        });
+    }
+    
+    // Partner cards animation
+    const partnerCards = document.querySelectorAll('.partner-card');
+    if (partnerCards.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'scale(1)';
+                    }, index * 80);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        partnerCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.8)';
+            card.style.transition = 'all 0.5s ease';
+            observer.observe(card);
+        });
+    }
+    
+    // Certification cards animation
+    const certCards = document.querySelectorAll('.cert-card');
+    if (certCards.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'rotateY(0deg)';
+                    }, index * 80);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        certCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'rotateY(90deg)';
             card.style.transition = 'all 0.6s ease';
             observer.observe(card);
         });
