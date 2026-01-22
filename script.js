@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initModalHandlers();
     initServiceFilters();
     initTooltips();
+    initTestimonialAnimations();
+    initPricingCards();
     console.log('🚀 Reezma Tech initialized successfully!');
 });
 
@@ -603,6 +605,66 @@ if ('performance' in window) {
         const perfData = performance.timing;
         const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
         console.log(`⚡ Page loaded in ${pageLoadTime}ms`);
+    });
+}
+
+// ==========================================
+// TESTIMONIAL ANIMATIONS
+// ==========================================
+function initTestimonialAnimations() {
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    
+    if (testimonialCards.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 150);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        testimonialCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    }
+}
+
+// ==========================================
+// PRICING CARD INTERACTIONS
+// ==========================================
+function initPricingCards() {
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    
+    pricingCards.forEach(card => {
+        // Add hover effect with shadow
+        card.addEventListener('mouseenter', function() {
+            this.style.boxShadow = '0 20px 60px rgba(3, 198, 252, 0.3)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.boxShadow = '';
+        });
+
+        // Animate on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s ease';
+        observer.observe(card);
     });
 }
 
