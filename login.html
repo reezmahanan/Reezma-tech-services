@@ -15,12 +15,15 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         .login-wrapper {
             display: flex;
             height: 100vh;
             width: 100%;
+            overflow: hidden;
         }
 
         /* Left Side - Tech Showcase */
@@ -70,6 +73,7 @@
         .left-content {
             max-width: 600px;
             z-index: 5;
+            text-align: left;
         }
 
         .brand-title {
@@ -77,6 +81,7 @@
             font-weight: 700;
             margin-bottom: 1rem;
             line-height: 1.2;
+            color: white;
         }
 
         .brand-logo-text {
@@ -117,11 +122,16 @@
             justify-content: center;
             padding: 3rem;
             position: relative;
+            overflow-y: auto;
         }
 
         .login-form-container {
             width: 100%;
             max-width: 400px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
         .form-label {
@@ -152,6 +162,11 @@
 
         .password-input-wrapper {
             position: relative;
+            margin-bottom: 1.25rem;
+        }
+
+        .password-input-wrapper .form-input {
+            margin-bottom: 0;
         }
 
         .toggle-password {
@@ -161,6 +176,7 @@
             cursor: pointer;
             color: #94a3b8;
             font-size: 1.2rem;
+            user-select: none;
         }
 
         .form-options {
