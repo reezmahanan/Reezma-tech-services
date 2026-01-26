@@ -360,13 +360,13 @@
         <aside class="sidebar">
             <div class="sidebar-logo">&lt;reezma/&gt;</div>
             <ul class="sidebar-menu">
-                <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Billing</a></li>
-                <li><a href="#">Notifications</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Help & Support</a></li>
+                <li><a href="#" class="active" data-section="dashboard">Dashboard</a></li>
+                <li><a href="#" data-section="services">Services</a></li>
+                <li><a href="#" data-section="analytics">Analytics</a></li>
+                <li><a href="#" data-section="billing">Billing</a></li>
+                <li><a href="#" data-section="notifications">Notifications</a></li>
+                <li><a href="#" data-section="settings">Settings</a></li>
+                <li><a href="#" data-section="help">Help & Support</a></li>
                 <li><a href="index.html">Back to Home</a></li>
             </ul>
         </aside>
@@ -383,81 +383,143 @@
                     <button class="logout-btn" onclick="window.location.href='login.html'">Logout</button>
                 </div>
             </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-icon">Projects</span>
-                        <span class="stat-trend">↑ 12%</span>
+            <div id="dashboard-sections">
+                <div id="section-dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-icon">Projects</span>
+                                <span class="stat-trend">↑ 12%</span>
+                            </div>
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Active Projects</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-icon">Hours</span>
+                                <span class="stat-trend">↑ 8%</span>
+                            </div>
+                            <div class="stat-value">156h</div>
+                            <div class="stat-label">Total Hours</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-icon">Rate</span>
+                                <span class="stat-trend">↑ 24%</span>
+                            </div>
+                            <div class="stat-value">89%</div>
+                            <div class="stat-label">Completion Rate</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-icon">Total</span>
+                                <span class="stat-trend">↑ 18%</span>
+                            </div>
+                            <div class="stat-value">$12.5K</div>
+                            <div class="stat-label">Total Spent</div>
+                        </div>
                     </div>
-                    <div class="stat-value">24</div>
-                    <div class="stat-label">Active Projects</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-icon">Hours</span>
-                        <span class="stat-trend">↑ 8%</span>
+                    <div class="content-section">
+                        <h2 class="section-title">Recent Services</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Service</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Cloud Migration</td>
+                                        <td>Jan 18, 2026</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>$3,200</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Security Audit</td>
+                                        <td>Jan 15, 2026</td>
+                                        <td><span class="status-badge status-pending">Pending</span></td>
+                                        <td>$1,500</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Custom Development</td>
+                                        <td>Jan 10, 2026</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>$5,800</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="stat-value">156h</div>
-                    <div class="stat-label">Total Hours</div>
                 </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-icon">Rate</span>
-                        <span class="stat-trend">↑ 24%</span>
+                <div id="section-services" style="display:none;">
+                    <div class="content-section">
+                        <h2 class="section-title">Your Services</h2>
+                        <p>View and manage all your active and past services here.</p>
+                        <!-- Add your services content here -->
                     </div>
-                    <div class="stat-value">89%</div>
-                    <div class="stat-label">Completion Rate</div>
                 </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-icon">Total</span>
-                        <span class="stat-trend">↑ 18%</span>
+                <div id="section-analytics" style="display:none;">
+                    <div class="content-section">
+                        <h2 class="section-title">Analytics</h2>
+                        <p>Track your usage, performance, and trends.</p>
+                        <!-- Add analytics charts or stats here -->
                     </div>
-                    <div class="stat-value">$12.5K</div>
-                    <div class="stat-label">Total Spent</div>
                 </div>
-            </div>
-
-            <div class="content-section">
-                <h2 class="section-title">Recent Services</h2>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Service</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Cloud Migration</td>
-                                <td>Jan 18, 2026</td>
-                                <td><span class="status-badge status-active">Active</span></td>
-                                <td>$3,200</td>
-                            </tr>
-                            <tr>
-                                <td>Security Audit</td>
-                                <td>Jan 15, 2026</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>$1,500</td>
-                            </tr>
-                            <tr>
-                                <td>Custom Development</td>
-                                <td>Jan 10, 2026</td>
-                                <td><span class="status-badge status-active">Active</span></td>
-                                <td>$5,800</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div id="section-billing" style="display:none;">
+                    <div class="content-section">
+                        <h2 class="section-title">Billing</h2>
+                        <p>View invoices, payment history, and manage billing details.</p>
+                        <!-- Add billing info here -->
+                    </div>
+                </div>
+                <div id="section-notifications" style="display:none;">
+                    <div class="content-section">
+                        <h2 class="section-title">Notifications</h2>
+                        <p>See your latest alerts and messages.</p>
+                        <!-- Add notifications here -->
+                    </div>
+                </div>
+                <div id="section-settings" style="display:none;">
+                    <div class="content-section">
+                        <h2 class="section-title">Settings</h2>
+                        <p>Update your profile, preferences, and account settings.</p>
+                        <!-- Add settings form here -->
+                    </div>
+                </div>
+                <div id="section-help" style="display:none;">
+                    <div class="content-section">
+                        <h2 class="section-title">Help & Support</h2>
+                        <p>Find answers or contact support for assistance.</p>
+                        <!-- Add help/support content here -->
+                    </div>
                 </div>
             </div>
         </main>
+        <script>
+        // Sidebar navigation logic
+        const sidebarLinks = document.querySelectorAll('.sidebar-menu a[data-section]');
+        const sections = [
+            'dashboard', 'services', 'analytics', 'billing', 'notifications', 'settings', 'help'
+        ];
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Remove active from all
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                // Hide all sections
+                sections.forEach(sec => {
+                    document.getElementById('section-' + sec).style.display = 'none';
+                });
+                // Show selected section
+                document.getElementById('section-' + this.dataset.section).style.display = '';
+            });
+        });
+        </script>
     </div>
 </body>
 </html>
