@@ -6,6 +6,15 @@
     <title>Admin Panel - Reezma Tech</title>
     <link rel="stylesheet" href="Reezstyle.css?v=2">
     <style>
+                /* Ensure only one admin section is visible at a time and prevent overlap */
+                #admin-sections > div {
+                    display: none;
+                    width: 100%;
+                    min-height: 400px;
+                }
+                #admin-sections > div.active-section {
+                    display: block;
+                }
         body {
             background: var(--dark);
         }
@@ -434,162 +443,234 @@
                 &lt;reezma/&gt; <span class="admin-badge">ADMIN</span>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="#">Users</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Payments</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Security</a></li>
+                <li><a href="#" class="active" data-section="dashboard">Dashboard</a></li>
+                <li><a href="#" data-section="users">Users</a></li>
+                <li><a href="#" data-section="services">Services</a></li>
+                <li><a href="#" data-section="projects">Projects</a></li>
+                <li><a href="#" data-section="payments">Payments</a></li>
+                <li><a href="#" data-section="analytics">Analytics</a></li>
+                <li><a href="#" data-section="settings">Settings</a></li>
+                <li><a href="#" data-section="security">Security</a></li>
                 <li><a href="index.html">Back to Home</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
-            <div class="admin-header">
-                <h1 class="admin-title">Admin Dashboard</h1>
-                <div class="header-actions">
-                    <button class="action-btn">➕ Add New</button>
-                    <button class="action-btn" onclick="window.location.href='login.html'">Logout</button>
+            <div id="admin-sections">
+                <div id="section-dashboard">
+                    <div class="admin-header">
+                        <h1 class="admin-title">Admin Dashboard</h1>
+                        <div class="header-actions">
+                            <button class="action-btn" onclick="window.location.href='login.html'">Logout</button>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-icon">Users</span>
+                                <span class="stat-trend">↑ 15%</span>
+                            </div>
+                            <div class="stat-value">1,248</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-icon">Projects</span>
+                                <span class="stat-trend">↑ 23%</span>
+                            </div>
+                            <div class="stat-value">347</div>
+                            <div class="stat-label">Active Projects</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-icon">Revenue</span>
+                                <span class="stat-trend">↑ 31%</span>
+                            </div>
+                            <div class="stat-value">$284K</div>
+                            <div class="stat-label">Revenue</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-icon">Status</span>
+                                <span class="stat-trend">99.9%</span>
+                            </div>
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 class="section-title">System Status</h2>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">Server Load</div>
+                                <div class="stat-value">42%</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Database Size</div>
+                                <div class="stat-value">12.4 GB</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Active Sessions</div>
+                                <div class="stat-value">156</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="section-users" style="display:none;">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Recent Users</h2>
+                            <button class="filter-btn" onclick="showAddUserForm()">➕ Add User</button>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Joined</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="user-table-body">
+                                    <!-- Filled by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="add-user-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:2000;align-items:center;justify-content:center;">
+                          <div style="background:white;padding:2rem 2.5rem;border-radius:12px;max-width:400px;width:100%;position:relative;">
+                            <button onclick="closeAddUserForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;">&times;</button>
+                            <h3 style="color:#DC143C;margin-bottom:1rem;">Add New User</h3>
+                            <form id="add-user-form">
+                              <div class="form-group">
+                                <label class="form-label" for="add-user-email">Email</label>
+                                <input type="email" id="add-user-email" class="form-input" required>
+                              </div>
+                              <div class="form-group">
+                                <label class="form-label" for="add-user-password">Password</label>
+                                <input type="password" id="add-user-password" class="form-input" required>
+                              </div>
+                              <div class="form-group">
+                                <label class="form-label" for="add-user-role">Role</label>
+                                <select id="add-user-role" class="form-input" required>
+                                  <option value="user">User/Customer</option>
+                                  <option value="admin">Admin</option>
+                                </select>
+                              </div>
+                              <button type="submit" class="login-btn">Add User</button>
+                            </form>
+                            <div id="add-user-error" style="color:#DC143C;margin-top:1rem;display:none;"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="section-services" style="display:none;">
+                    <div class="content-section"><h2 class="section-title">Services</h2><p>Manage all services here.</p></div>
+                </div>
+                <div id="section-projects" style="display:none;">
+                    <div class="content-section"><h2 class="section-title">Projects</h2><p>Manage all projects here.</p></div>
+                </div>
+                <div id="section-payments" style="display:none;">
+                    <div class="content-section"><h2 class="section-title">Payments</h2><p>Manage all payments here.</p></div>
+                </div>
+                <div id="section-analytics" style="display:none;">
+                    <div class="content-section"><h2 class="section-title">Analytics</h2><p>View analytics here.</p></div>
+                </div>
+                <div id="section-settings" style="display:none;">
+                    <div class="content-section"><h2 class="section-title">Settings</h2><p>Update admin settings here.</p></div>
+                </div>
+                <div id="section-security" style="display:none;">
+                    <div class="content-section"><h2 class="section-title">Security</h2><p>Manage security settings here.</p></div>
                 </div>
             </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-icon">Users</span>
-                        <span class="stat-trend">↑ 15%</span>
-                    </div>
-                    <div class="stat-value">1,248</div>
-                    <div class="stat-label">Total Users</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-icon">Projects</span>
-                        <span class="stat-trend">↑ 23%</span>
-                    </div>
-                    <div class="stat-value">347</div>
-                    <div class="stat-label">Active Projects</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-icon">Revenue</span>
-                        <span class="stat-trend">↑ 31%</span>
-                    </div>
-                    <div class="stat-value">$284K</div>
-                    <div class="stat-label">Revenue</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-icon">Status</span>
-                        <span class="stat-trend">99.9%</span>
-                    </div>
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">Uptime</div>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <div class="section-header">
-                    <h2 class="section-title">Recent Users</h2>
-                    <button class="filter-btn">🔍 Filter</button>
-                </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Status</th>
-                                <th>Joined</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">JD</div>
-                                        John Doe
-                                    </div>
-                                </td>
-                                <td>john@example.com</td>
-                                <td>User</td>
-                                <td><span class="status-badge status-active">Active</span></td>
-                                <td>Jan 20, 2026</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-small btn-edit">Edit</button>
-                                        <button class="btn-small btn-delete">Delete</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">AS</div>
-                                        Alice Smith
-                                    </div>
-                                </td>
-                                <td>alice@example.com</td>
-                                <td>Admin</td>
-                                <td><span class="status-badge status-active">Active</span></td>
-                                <td>Jan 18, 2026</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-small btn-edit">Edit</button>
-                                        <button class="btn-small btn-delete">Delete</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">BJ</div>
-                                        Bob Johnson
-                                    </div>
-                                </td>
-                                <td>bob@example.com</td>
-                                <td>User</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>Jan 15, 2026</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-small btn-edit">Edit</button>
-                                        <button class="btn-small btn-delete">Delete</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <div class="section-header">
-                    <h2 class="section-title">System Status</h2>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Server Load</div>
-                        <div class="stat-value">42%</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Database Size</div>
-                        <div class="stat-value">12.4 GB</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Active Sessions</div>
-                        <div class="stat-value">156</div>
-                    </div>
-                </div>
             </div>
         </main>
-    </div>
+<script>
+// Sidebar navigation logic for admin
+const sidebarLinks = document.querySelectorAll('.sidebar-menu a[data-section]');
+const adminSections = [
+    'dashboard', 'users', 'services', 'projects', 'payments', 'analytics', 'settings', 'security'
+];
+function showAdminSection(section) {
+    adminSections.forEach(sec => {
+        const el = document.getElementById('section-' + sec);
+        if (el) el.classList.remove('active-section');
+    });
+    const activeEl = document.getElementById('section-' + section);
+    if (activeEl) activeEl.classList.add('active-section');
+}
+sidebarLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Remove active from all
+        sidebarLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        // Show only the selected section
+        showAdminSection(this.dataset.section);
+    });
+});
+// Show dashboard by default on load
+showAdminSection('dashboard');
+// User management logic
+function getInitials(name) {
+    if (!name) return '';
+    return name.split(/\s|\./).filter(Boolean).map(n => n[0].toUpperCase()).join('').slice(0,2);
+}
+function renderUserTable() {
+    let users = JSON.parse(localStorage.getItem('reezma_users') || '[]');
+    const tbody = document.getElementById('user-table-body');
+    tbody.innerHTML = users.map((u, idx) => `
+        <tr>
+            <td><div class="user-cell"><div class="user-avatar-small">${getInitials(u.name || u.email)}</div>${u.name || u.email}</div></td>
+            <td>${u.email}</td>
+            <td>${u.role === 'admin' ? 'Admin' : 'User'}</td>
+            <td><span class="status-badge status-active">${u.status || 'Active'}</span></td>
+            <td>${u.joined || ''}</td>
+            <td><div class="action-buttons">
+                <button class="btn-small btn-delete" onclick="deleteUser(${idx})">Delete</button>
+            </div></td>
+        </tr>
+    `).join('');
+}
+function deleteUser(idx) {
+    if (!confirm('Delete this user?')) return;
+    let users = JSON.parse(localStorage.getItem('reezma_users') || '[]');
+    users.splice(idx, 1);
+    localStorage.setItem('reezma_users', JSON.stringify(users));
+    renderUserTable();
+}
+function showAddUserForm() {
+    document.getElementById('add-user-modal').style.display = 'flex';
+}
+function closeAddUserForm() {
+    document.getElementById('add-user-modal').style.display = 'none';
+    document.getElementById('add-user-form').reset();
+    document.getElementById('add-user-error').style.display = 'none';
+}
+document.getElementById('add-user-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('add-user-email').value.trim();
+    const password = document.getElementById('add-user-password').value;
+    const role = document.getElementById('add-user-role').value;
+    let users = JSON.parse(localStorage.getItem('reezma_users') || '[]');
+    const errorDiv = document.getElementById('add-user-error');
+    errorDiv.style.display = 'none';
+    if (users.find(u => u.email === email)) {
+        errorDiv.textContent = 'Email already exists.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    users.push({ email, password, role, name: email.split('@')[0], status: 'Active', joined: new Date().toISOString().slice(0,10) });
+    localStorage.setItem('reezma_users', JSON.stringify(users));
+    closeAddUserForm();
+    renderUserTable();
+});
+// Render table on load
+renderUserTable();
+</script>
 </body>
 </html>

@@ -374,13 +374,8 @@
         <main class="main-content">
             <div class="dashboard-header">
                 <h1 class="dashboard-title">Welcome Back, User!</h1>
-                <div class="user-profile">
-                    <div class="user-info">
-                        <div class="user-name">John Doe</div>
-                        <div class="user-role">Standard User</div>
-                    </div>
-                    <div class="user-avatar">JD</div>
-                    <button class="logout-btn" onclick="window.location.href='login.html'">Logout</button>
+                <div class="user-profile" id="user-profile">
+                    <!-- Filled by JS -->
                 </div>
             </div>
             <div id="dashboard-sections">
@@ -519,6 +514,29 @@
                 document.getElementById('section-' + this.dataset.section).style.display = '';
             });
         });
+
+        // User info logic
+        function getInitials(name) {
+            if (!name) return '';
+            return name.split(/\s|\./).filter(Boolean).map(n => n[0].toUpperCase()).join('').slice(0,2);
+        }
+        function renderUserProfile() {
+            const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
+            if (!user.email) {
+                window.location.href = 'login.html';
+                return;
+            }
+            document.querySelector('.dashboard-title').textContent = `Welcome Back, ${user.name || user.email}!`;
+            document.getElementById('user-profile').innerHTML = `
+                <div class="user-info">
+                    <div class="user-name">${user.name || user.email}</div>
+                    <div class="user-role">${user.role === 'admin' ? 'Admin' : 'Standard User'}</div>
+                </div>
+                <div class="user-avatar">${getInitials(user.name || user.email)}</div>
+                <button class="logout-btn" onclick="localStorage.removeItem('reezma_current_user');window.location.href='login.html'">Logout</button>
+            `;
+        }
+        renderUserProfile();
         </script>
     </div>
 </body>
