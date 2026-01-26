@@ -169,60 +169,55 @@
             
             <div class="contact-form-container">
                 <form class="contact-form" id="contactForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" id="firstName" name="firstName" required placeholder="First Name">
+                    <!-- Formspree integration: replace YOUR_EMAIL_HERE with your email after registering at formspree.io -->
+                    <form action="https://formspree.io/f/mnqewqzv" method="POST" id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="firstName" name="firstName" required placeholder="First Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="lastName" name="lastName" required placeholder="Last Name">
+                            </div>
                         </div>
-                        
                         <div class="form-group">
-                            <input type="text" id="lastName" name="lastName" required placeholder="Last Name">
+                            <input type="email" id="email" name="email" required placeholder="Work Email">
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" required placeholder="Work Email">
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="text" id="jobTitle" name="jobTitle" required placeholder="Job Title">
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="text" id="company" name="company" required placeholder="Company">
-                    </div>
-                    
-                    <div class="form-group">
-                        <select id="country" name="country" required>
-                            <option value="">Country</option>
-                            <option value="United States">United States</option>
-                            <option value="Canada">Canada</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="Australia">Australia</option>
-                            <option value="Germany">Germany</option>
-                            <option value="France">France</option>
-                            <option value="India">India</option>
-                            <option value="China">China</option>
-                            <option value="Japan">Japan</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <textarea id="message" name="message" rows="5" required placeholder="Message"></textarea>
-                    </div>
-                    
-                    <div class="form-checkbox">
-                        <input type="checkbox" id="privacy" name="privacy" required>
-                        <label for="privacy">I confirm, I have read and agree to <a href="#">Reezma's Privacy Policy</a> and consent to sharing my information.</label>
-                    </div>
-                    
-                    <div class="form-checkbox">
-                        <input type="checkbox" id="updates" name="updates">
-                        <label for="updates">I would like to receive alerts and updates from Reezma.</label>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Submit</button>
-                </form>
+                        <div class="form-group">
+                            <input type="text" id="jobTitle" name="jobTitle" required placeholder="Job Title">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="company" name="company" required placeholder="Company">
+                        </div>
+                        <div class="form-group">
+                            <select id="country" name="country" required>
+                                <option value="">Country</option>
+                                <option value="United States">United States</option>
+                                <option value="Canada">Canada</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Germany">Germany</option>
+                                <option value="France">France</option>
+                                <option value="India">India</option>
+                                <option value="China">China</option>
+                                <option value="Japan">Japan</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="5" required placeholder="Message"></textarea>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="privacy" name="privacy" required>
+                            <label for="privacy">I confirm, I have read and agree to <a href="#">Reezma's Privacy Policy</a> and consent to sharing my information.</label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="updates" name="updates">
+                            <label for="updates">I would like to receive alerts and updates from Reezma.</label>
+                        </div>
+                        <input type="hidden" name="_subject" value="New Contact Form Submission from Reezma Tech">
+                        <div id="form-status" style="margin:1rem 0;color:#DC143C;text-align:center;display:none;"></div>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
             </div>
         </div>
     </section>
@@ -268,6 +263,41 @@
     </footer>
 
     <script src="script.js"></script>
+<script>
+// Contact form feedback for Formspree
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const status = document.getElementById('form-status');
+        status.style.display = 'none';
+        status.textContent = '';
+        const data = new FormData(contactForm);
+        try {
+            const res = await fetch(contactForm.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+            if (res.ok) {
+                contactForm.reset();
+                status.textContent = 'Thank you! Your message has been sent.';
+                status.style.color = '#27ae60';
+                status.style.display = 'block';
+            } else {
+                const result = await res.json();
+                status.textContent = result.errors ? result.errors.map(e => e.message).join(', ') : 'Oops! Something went wrong.';
+                status.style.color = '#DC143C';
+                status.style.display = 'block';
+            }
+        } catch (err) {
+            status.textContent = 'Network error. Please try again later.';
+            status.style.color = '#DC143C';
+            status.style.display = 'block';
+        }
+    });
+}
+</script>
 </body>
 </html>
 
