@@ -186,48 +186,21 @@ function initCardInteractions() {
     const cards = document.querySelectorAll('.service-card');
     
     cards.forEach(card => {
-        // 3D tilt effect
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-            
-            card.style.transform = `
-                perspective(1000px)
-                rotateX(${rotateX}deg)
-                rotateY(${rotateY}deg)
-                scale3d(1.05, 1.05, 1.05)
-            `;
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-        });
-
-        // Ripple effect on click
+        // Ripple effect on click (keep if you want, or remove if you want no animation at all)
         card.addEventListener('click', function(e) {
             const ripple = document.createElement('div');
             ripple.className = 'ripple';
             this.appendChild(ripple);
-            
             const rect = this.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
             const x = e.clientX - rect.left - size / 2;
             const y = e.clientY - rect.top - size / 2;
-            
             ripple.style.cssText = `
                 width: ${size}px;
                 height: ${size}px;
                 left: ${x}px;
                 top: ${y}px;
             `;
-            
             setTimeout(() => ripple.remove(), 600);
         });
     });
@@ -235,10 +208,13 @@ function initCardInteractions() {
     // CTA Button interactions
     document.querySelectorAll('.cta-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            e.preventDefault();
             const card = btn.closest('.service-card');
-            const service = card.querySelector('.service-title').textContent;
-            openServiceModal(service);
+            if (card) {
+                e.preventDefault();
+                const service = card.querySelector('.service-title').textContent;
+                openServiceModal(service);
+            }
+            // else: allow default navigation for links like 'Our Services'
         });
     });
 }
