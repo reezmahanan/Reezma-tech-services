@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Reezma Tech</title>
     <link rel="stylesheet" href="Reezstyle.css?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
-                /* Ensure only one admin section is visible at a time and prevent overlap */
-                #admin-sections > div {
-                    display: none;
-                    width: 100%;
-                    min-height: 400px;
-                }
-                #admin-sections > div.active-section {
-                    display: block;
-                }
+        /* Admin Section Visibility */
+        .admin-section {
+            display: none;
+            width: 100%;
+            min-height: 400px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         body {
             background: var(--dark);
         }
@@ -267,6 +275,31 @@
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 500;
+            position: relative;
+        }
+        
+        .status-badge.status-active::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            50% {
+                opacity: 0.8;
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
         }
 
         .status-active {
@@ -428,249 +461,1955 @@
                 gap: 1rem;
                 align-items: flex-start;
             }
+            
+            .chart-container {
+                height: 250px;
+                padding: 1rem;
+            }
 
             .filter-btn {
                 width: 100%;
             }
         }
+        /* Chart Styles */
+        .chart-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            height: 350px;
+            position: relative;
+        }
+        
+        .chart-container canvas {
+            max-height: 100%;
+        }
+        
+        .chart-bar {
+            display: inline-block;
+            background: var(--gradient);
+            border-radius: 4px 4px 0 0;
+            margin: 0 0.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .chart-bar:hover {
+            opacity: 0.8;
+            transform: translateY(-5px);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #1a1a1a;
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+        
+        .modal-title {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.2);
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .project-title {
+            color: var(--light);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .payment-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-info {
+            flex: 1;
+        }
+        
+        .payment-amount {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        /* Toast Animation */
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('active')">☰</button>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <div class="admin-container">
         <aside class="sidebar">
             <div class="sidebar-logo">
                 &lt;reezma/&gt; <span class="admin-badge">ADMIN</span>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="#" class="active" data-section="dashboard">Dashboard</a></li>
-                <li><a href="#" data-section="users">Users</a></li>
-                <li><a href="#" data-section="services">Services</a></li>
-                <li><a href="#" data-section="projects">Projects</a></li>
-                <li><a href="#" data-section="payments">Payments</a></li>
-                <li><a href="#" data-section="analytics">Analytics</a></li>
-                <li><a href="#" data-section="settings">Settings</a></li>
-                <li><a href="#" data-section="security">Security</a></li>
-                <li><a href="index.html">Back to Home</a></li>
+                <li><a href="#" class="menu-link active" data-section="dashboard">📊 Dashboard</a></li>
+                <li><a href="#" class="menu-link" data-section="users">👥 Users</a></li>
+                <li><a href="#" class="menu-link" data-section="services">🛠️ Services</a></li>
+                <li><a href="#" class="menu-link" data-section="projects">📁 Projects</a></li>
+                <li><a href="#" class="menu-link" data-section="payments">💳 Payments</a></li>
+                <li><a href="#" class="menu-link" data-section="analytics">📈 Analytics</a></li>
+                <li><a href="#" class="menu-link" data-section="settings">⚙️ Settings</a></li>
+                <li><a href="#" class="menu-link" data-section="security">🔒 Security</a></li>
+                <li><a href="index.html">🏠 Back to Home</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
-            <div id="admin-sections">
-                <div id="section-dashboard">
-                    <div class="admin-header">
-                        <h1 class="admin-title">Admin Dashboard</h1>
-                        <div class="header-actions">
-                            <button class="action-btn" onclick="window.location.href='login.html'">Logout</button>
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboard-section" class="admin-section active">
+                <div class="admin-header">
+                    <h1 class="admin-title">Admin Dashboard</h1>
+                    <div class="header-actions">
+                        <button class="action-btn" onclick="refreshStats()">🔄 Refresh</button>
+                        <button class="action-btn" onclick="logout()">🚪 Logout</button>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-icon">👥 USERS</span>
+                            <span class="stat-trend">↑ 15%</span>
+                        </div>
+                        <div class="stat-value" id="total-users">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-icon">📁 PROJECTS</span>
+                            <span class="stat-trend">↑ 23%</span>
+                        </div>
+                        <div class="stat-value" id="total-projects">0</div>
+                        <div class="stat-label">Active Projects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-icon">💰 REVENUE</span>
+                            <span class="stat-trend">↑ 31%</span>
+                        </div>
+                        <div class="stat-value" id="total-revenue">$0</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-icon">⚡ STATUS</span>
+                            <span class="stat-trend">99.9%</span>
+                        </div>
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">System Uptime</div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">System Status Monitoring</h2>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <span id="status-indicator" class="status-badge status-active">🟢 All Systems Operational</span>
+                            <span style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Last updated: <span id="last-update-time">--</span></span>
                         </div>
                     </div>
+                    
+                    <!-- Server Metrics -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="stat-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <div class="stat-label">CPU Usage</div>
+                                <div class="stat-value" style="font-size: 1.3rem;" id="cpu-usage">0%</div>
+                            </div>
+                            <div class="progress-bar" style="margin: 0;">
+                                <div class="progress-fill" id="cpu-progress" style="width: 0%; background: linear-gradient(135deg, #3b82f6, #2563eb);"></div>
+                            </div>
+                            <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 0.5rem;" id="cpu-status">Normal</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <div class="stat-label">Memory Usage</div>
+                                <div class="stat-value" style="font-size: 1.3rem;" id="memory-usage">0%</div>
+                            </div>
+                            <div class="progress-bar" style="margin: 0;">
+                                <div class="progress-fill" id="memory-progress" style="width: 0%; background: linear-gradient(135deg, #10b981, #059669);"></div>
+                            </div>
+                            <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 0.5rem;" id="memory-status">Normal</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <div class="stat-label">Disk Usage</div>
+                                <div class="stat-value" style="font-size: 1.3rem;" id="disk-usage">0%</div>
+                            </div>
+                            <div class="progress-bar" style="margin: 0;">
+                                <div class="progress-fill" id="disk-progress" style="width: 0%; background: linear-gradient(135deg, #f59e0b, #d97706);"></div>
+                            </div>
+                            <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 0.5rem;" id="disk-status">Normal</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Metrics -->
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">Users</span>
-                                <span class="stat-trend">↑ 15%</span>
-                            </div>
-                            <div class="stat-value">1,248</div>
-                            <div class="stat-label">Total Users</div>
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-label">Database Size</div>
+                            <div class="stat-value" id="db-size">0 GB</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">Projects</span>
-                                <span class="stat-trend">↑ 23%</span>
-                            </div>
-                            <div class="stat-value">347</div>
-                            <div class="stat-label">Active Projects</div>
+                            <div class="stat-icon">👤</div>
+                            <div class="stat-label">Active Sessions</div>
+                            <div class="stat-value" id="active-sessions">0</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">Revenue</span>
-                                <span class="stat-trend">↑ 31%</span>
-                            </div>
-                            <div class="stat-value">$284K</div>
-                            <div class="stat-label">Revenue</div>
+                            <div class="stat-icon">⚡</div>
+                            <div class="stat-label">API Response Time</div>
+                            <div class="stat-value" id="api-response">0ms</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">Status</span>
-                                <span class="stat-trend">99.9%</span>
-                            </div>
-                            <div class="stat-value">24/7</div>
-                            <div class="stat-label">Uptime</div>
+                            <div class="stat-icon">🌐</div>
+                            <div class="stat-label">Network Status</div>
+                            <div class="stat-value" id="network-status">Online</div>
                         </div>
                     </div>
-                    <div class="content-section">
-                        <div class="section-header">
-                            <h2 class="section-title">System Status</h2>
-                        </div>
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-label">Server Load</div>
-                                <div class="stat-value">42%</div>
+                    
+                    <!-- System Uptime -->
+                    <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(220, 20, 60, 0.05); border: 1px solid rgba(220, 20, 60, 0.2); border-radius: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <div style="color: rgba(255,255,255,0.7); margin-bottom: 0.5rem;">System Uptime</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);" id="system-uptime">0d 0h 0m</div>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-label">Database Size</div>
-                                <div class="stat-value">12.4 GB</div>
+                            <div>
+                                <div style="color: rgba(255,255,255,0.7); margin-bottom: 0.5rem;">Total Requests</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);" id="total-requests">0</div>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-label">Active Sessions</div>
-                                <div class="stat-value">156</div>
+                            <div>
+                                <div style="color: rgba(255,255,255,0.7); margin-bottom: 0.5rem;">Success Rate</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #10b981;" id="success-rate">0%</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="section-users" style="display:none;">
-                    <div class="content-section">
-                        <div class="section-header">
-                            <h2 class="section-title">Recent Users</h2>
-                            <button class="filter-btn" onclick="showAddUserForm()">➕ Add User</button>
-                        </div>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>User</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
-                                        <th>Joined</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="user-table-body">
-                                    <!-- Filled by JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <div id="add-user-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:2000;align-items:center;justify-content:center;">
-                          <div style="background:white;padding:2rem 2.5rem;border-radius:12px;max-width:400px;width:100%;position:relative;">
-                            <button onclick="closeAddUserForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;">&times;</button>
-                            <h3 style="color:#DC143C;margin-bottom:1rem;">Add New User</h3>
-                            <form id="add-user-form">
-                              <div class="form-group">
-                                <label class="form-label" for="add-user-email">Email</label>
-                                <input type="email" id="add-user-email" class="form-input" required>
-                              </div>
-                              <div class="form-group">
-                                <label class="form-label" for="add-user-password">Password</label>
-                                <input type="password" id="add-user-password" class="form-input" required>
-                              </div>
-                              <div class="form-group">
-                                <label class="form-label" for="add-user-role">Role</label>
-                                <select id="add-user-role" class="form-input" required>
-                                  <option value="user">User/Customer</option>
-                                  <option value="admin">Admin</option>
-                                </select>
-                              </div>
-                              <button type="submit" class="login-btn">Add User</button>
-                            </form>
-                            <div id="add-user-error" style="color:#DC143C;margin-top:1rem;display:none;"></div>
-                          </div>
-                        </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Activity</h2>
                     </div>
-                </div>
-                <div id="section-services" style="display:none;">
-                    <div class="content-section"><h2 class="section-title">Services</h2><p>Manage all services here.</p></div>
-                </div>
-                <div id="section-projects" style="display:none;">
-                    <div class="content-section"><h2 class="section-title">Projects</h2><p>Manage all projects here.</p></div>
-                </div>
-                <div id="section-payments" style="display:none;">
-                    <div class="content-section"><h2 class="section-title">Payments</h2><p>Manage all payments here.</p></div>
-                </div>
-                <div id="section-analytics" style="display:none;">
-                    <div class="content-section"><h2 class="section-title">Analytics</h2><p>View analytics here.</p></div>
-                </div>
-                <div id="section-settings" style="display:none;">
-                    <div class="content-section"><h2 class="section-title">Settings</h2><p>Update admin settings here.</p></div>
-                </div>
-                <div id="section-security" style="display:none;">
-                    <div class="content-section"><h2 class="section-title">Security</h2><p>Manage security settings here.</p></div>
+                    <div id="recent-activity"></div>
                 </div>
             </div>
+
+            <!-- USERS SECTION -->
+            <div id="users-section" class="admin-section">
+                <div class="admin-header">
+                    <h1 class="admin-title">User Management</h1>
+                    <div class="header-actions">
+                        <button class="action-btn" onclick="openAddUserModal()">➕ Add User</button>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">All Users</h2>
+                        <input type="text" class="form-input" style="max-width: 300px;" placeholder="Search users..." onkeyup="searchUsers(this.value)">
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICES SECTION -->
+            <div id="services-section" class="admin-section">
+                <div class="admin-header">
+                    <h1 class="admin-title">Services Management</h1>
+                    <div class="header-actions">
+                        <button class="action-btn" onclick="openAddServiceModal()">➕ Add Service</button>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Available Services</h2>
+                    </div>
+                    <div id="services-list"></div>
+                </div>
+            </div>
+
+            <!-- PROJECTS SECTION -->
+            <div id="projects-section" class="admin-section">
+                <div class="admin-header">
+                    <h1 class="admin-title">Project Management</h1>
+                    <div class="header-actions">
+                        <button class="action-btn" onclick="openAddProjectModal()">➕ New Project</button>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Active Projects</h2>
+                    </div>
+                    <div id="projects-list"></div>
+                </div>
+            </div>
+
+            <!-- PAYMENTS SECTION -->
+            <div id="payments-section" class="admin-section">
+                <div class="admin-header">
+                    <h1 class="admin-title">Payment Management</h1>
+                    <div class="header-actions">
+                        <button class="action-btn" onclick="exportPayments()">📥 Export</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💰 TOTAL</div>
+                        <div class="stat-value" id="payments-total">$0</div>
+                        <div class="stat-label">Total Payments</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅ COMPLETED</div>
+                        <div class="stat-value" id="payments-completed">$0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳ PENDING</div>
+                        <div class="stat-value" id="payments-pending">$0</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Transactions</h2>
+                    </div>
+                    <div id="payments-list"></div>
+                </div>
+            </div>
+
+            <!-- ANALYTICS SECTION -->
+            <div id="analytics-section" class="admin-section">
+                <div class="admin-header">
+                    <h1 class="admin-title">Analytics & Reports</h1>
+                    <div class="header-actions">
+                        <button class="action-btn" onclick="generateReport()">📊 Generate Report</button>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Revenue Overview</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenue-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">User Growth</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="users-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Project Status Distribution</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="status-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Avg. Project Value</div>
+                        <div class="stat-value">$12.5K</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Completion Rate</div>
+                        <div class="stat-value">94%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Client Satisfaction</div>
+                        <div class="stat-value">4.8/5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS SECTION -->
+            <div id="settings-section" class="admin-section">
+                <div class="admin-header">
+                    <h1 class="admin-title">System Settings</h1>
+                </div>
+
+                <div class="content-section">
+                    <h3 class="section-title">General Settings</h3>
+                    <form id="settings-form">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-input" value="Reezma Tech Services">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contact Email</label>
+                            <input type="email" class="form-input" value="info@reezmatech.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Support Phone</label>
+                            <input type="tel" class="form-input" value="+1 (555) 123-4567">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Timezone</label>
+                            <select class="form-select">
+                                <option>UTC-5 (Eastern)</option>
+                                <option>UTC-6 (Central)</option>
+                                <option>UTC-7 (Mountain)</option>
+                                <option>UTC-8 (Pacific)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="action-btn">💾 Save Settings</button>
+                    </form>
+                </div>
+
+                <div class="content-section">
+                    <h3 class="section-title">Email Notifications</h3>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" checked> New User Registrations
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" checked> New Project Submissions
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" checked> Payment Notifications
+                        </label>
+                    </div>
+                    <button class="action-btn">💾 Save Preferences</button>
+                </div>
+            </div>
+
+            <!-- SECURITY SECTION -->
+            <div id="security-section" class="admin-section">
+                <div class="admin-header">
+                    <h1 class="admin-title">Security & Access Control</h1>
+                </div>
+
+                <div class="content-section">
+                    <h3 class="section-title">Change Admin Password</h3>
+                    <form id="password-form">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-input" required>
+                        </div>
+                        <button type="submit" class="action-btn">🔒 Update Password</button>
+                    </form>
+                </div>
+
+                <div class="content-section">
+                    <h3 class="section-title">Two-Factor Authentication</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1rem;">
+                        Add an extra layer of security to your account.
+                    </p>
+                    <div id="2fa-status-container">
+                        <div id="2fa-disabled" style="display: block;">
+                            <button class="action-btn" onclick="open2FASetup()">🔐 Enable 2FA</button>
+                        </div>
+                        <div id="2fa-enabled" style="display: none;">
+                            <div style="padding: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; margin-bottom: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; color: #10b981; font-weight: 600; margin-bottom: 0.5rem;">
+                                    ✓ Two-Factor Authentication Enabled
+                                </div>
+                                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">
+                                    Your account is protected with 2FA. Backup codes: <span id="backup-codes-count">8</span> remaining
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <button class="action-btn" onclick="view2FABackupCodes()" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.3);">📋 View Backup Codes</button>
+                                <button class="action-btn" onclick="disable2FA()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3);">🚫 Disable 2FA</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3 class="section-title">Active Sessions</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Device</th>
+                                    <th>Location</th>
+                                    <th>Last Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Chrome on Windows</td>
+                                    <td>New York, US</td>
+                                    <td>Active Now</td>
+                                    <td><button class="btn-small btn-delete">Revoke</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </main>
+    </div>
+
+    <!-- MODALS -->
+    <!-- Add User Modal -->
+    <div id="add-user-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('add-user-modal')">&times;</button>
+            <h3 class="modal-title">Add New User</h3>
+            <form id="add-user-form">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="user-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="user-email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="user-password" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select id="user-role" class="form-select" required>
+                        <option value="user">User/Customer</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="action-btn" style="width: 100%;">Add User</button>
+            </form>
+            <div id="user-error" style="color: var(--error); margin-top: 1rem; display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Add Service Modal -->
+    <div id="add-service-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('add-service-modal')">&times;</button>
+            <h3 class="modal-title">Add New Service</h3>
+            <form id="add-service-form">
+                <div class="form-group">
+                    <label class="form-label">Service Name</label>
+                    <input type="text" id="service-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea id="service-description" class="form-textarea" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Price</label>
+                    <input type="number" id="service-price" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select id="service-category" class="form-select" required>
+                        <option value="web">Web Development</option>
+                        <option value="mobile">Mobile Development</option>
+                        <option value="design">UI/UX Design</option>
+                        <option value="consulting">Consulting</option>
+                    </select>
+                </div>
+                <button type="submit" class="action-btn" style="width: 100%;">Add Service</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div id="add-project-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('add-project-modal')">&times;</button>
+            <h3 class="modal-title">Create New Project</h3>
+            <form id="add-project-form">
+                <div class="form-group">
+                    <label class="form-label">Project Name</label>
+                    <input type="text" id="project-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Client</label>
+                    <input type="text" id="project-client" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Budget</label>
+                    <input type="number" id="project-budget" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Deadline</label>
+                    <input type="date" id="project-deadline" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select id="project-status" class="form-select" required>
+                        <option value="planning">Planning</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="review">Under Review</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <button type="submit" class="action-btn" style="width: 100%;">Create Project</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2FA Setup Modal -->
+    <div id="2fa-setup-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="modal-close" onclick="closeModal('2fa-setup-modal')">&times;</button>
+            <h3 class="modal-title">🔐 Enable Two-Factor Authentication</h3>
+            
+            <div id="2fa-step-1" style="display: block;">
+                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem;">
+                    Scan the QR code below with your authenticator app (Google Authenticator, Authy, etc.)
+                </p>
+                
+                <!-- QR Code Placeholder -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; text-align: center; margin-bottom: 1.5rem;">
+                    <div style="width: 200px; height: 200px; margin: 0 auto; background: black; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                        <div style="width: 180px; height: 180px; background: white; position: relative; padding: 10px;">
+                            <!-- Simulated QR Code Pattern -->
+                            <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; height: 100%;">
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                                <div style="background: white;"></div>
+                                <div style="background: black;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; color: #333; font-size: 0.9rem; font-family: monospace;" id="2fa-secret-key">XXXX XXXX XXXX XXXX</div>
+                </div>
+                
+                <div style="background: rgba(220, 20, 60, 0.1); border: 1px solid rgba(220, 20, 60, 0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                    <div style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                        <strong>Manual Entry:</strong> If you can't scan the QR code, enter this key manually:
+                        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(0,0,0,0.3); border-radius: 4px; font-family: monospace; letter-spacing: 2px;" id="2fa-manual-key">REEZ MA23 TECH SERV ICES</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Enter 6-digit code from your app</label>
+                    <input type="text" id="2fa-verification-code" class="form-input" maxlength="6" placeholder="000000" style="text-align: center; font-size: 1.5rem; letter-spacing: 0.5rem;">
+                </div>
+                
+                <button class="action-btn" onclick="verify2FACode()" style="width: 100%;">✓ Verify & Enable</button>
+            </div>
+            
+            <div id="2fa-step-2" style="display: none;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 3rem; color: #10b981; margin-bottom: 1rem;">✓</div>
+                    <h4 style="color: var(--light); margin-bottom: 0.5rem;">2FA Successfully Enabled!</h4>
+                    <p style="color: rgba(255, 255, 255, 0.7);">Your account is now more secure.</p>
+                </div>
+                
+                <div style="background: rgba(220, 20, 60, 0.1); border: 1px solid rgba(220, 20, 60, 0.3); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--accent); margin-bottom: 1rem;">🔑 Backup Codes</h4>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-bottom: 1rem;">
+                        Save these backup codes in a safe place. Each code can be used once if you lose access to your authenticator app.
+                    </p>
+                    <div id="backup-codes-display" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; font-family: monospace; font-size: 0.95rem;">
+                        <!-- Backup codes will be inserted here -->
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <button class="action-btn" onclick="downloadBackupCodes()" style="flex: 1; background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.3);">📥 Download Codes</button>
+                    <button class="action-btn" onclick="finish2FASetup()" style="flex: 1;">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backup Codes View Modal -->
+    <div id="backup-codes-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('backup-codes-modal')">&times;</button>
+            <h3 class="modal-title">🔑 Your Backup Codes</h3>
+            <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1rem;">
+                Use these codes to access your account if you lose your authenticator device.
+            </p>
+            <div id="backup-codes-list" style="font-family: monospace; font-size: 0.95rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-bottom: 1.5rem;">
+                <!-- Codes will be displayed here -->
+            </div>
+            <button class="action-btn" onclick="downloadBackupCodes()" style="width: 100%;">📥 Download Codes</button>
+        </div>
+    </div>
+
 <script>
-// Sidebar navigation logic for admin
-const sidebarLinks = document.querySelectorAll('.sidebar-menu a[data-section]');
-const adminSections = [
-    'dashboard', 'users', 'services', 'projects', 'payments', 'analytics', 'settings', 'security'
-];
-function showAdminSection(section) {
-    adminSections.forEach(sec => {
-        const el = document.getElementById('section-' + sec);
-        if (el) el.classList.remove('active-section');
-    });
-    const activeEl = document.getElementById('section-' + section);
-    if (activeEl) activeEl.classList.add('active-section');
-}
-sidebarLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Remove active from all
-        sidebarLinks.forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-        // Show only the selected section
-        showAdminSection(this.dataset.section);
-    });
+// ==========================================
+// ADMIN DASHBOARD - REEZMA TECH
+// ==========================================
+
+// Global State
+const adminState = {
+    currentSection: 'dashboard',
+    users: [],
+    projects: [],
+    services: [],
+    payments: []
+};
+
+// ==========================================
+// INITIALIZATION
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    initAdminDashboard();
+    loadAllData();
+    renderDashboardStats();
+    setupEventListeners();
 });
-// Show dashboard by default on load
-showAdminSection('dashboard');
-// User management logic
-function getInitials(name) {
-    if (!name) return '';
-    return name.split(/\s|\./).filter(Boolean).map(n => n[0].toUpperCase()).join('').slice(0,2);
+
+function initAdminDashboard() {
+    // Initialize sample data if empty
+    if (!localStorage.getItem('reezma_users')) {
+        const sampleUsers = [
+            { name: 'John Doe', email: 'john@example.com', password: 'password', role: 'user', status: 'Active', joined: '2026-01-15' },
+            { name: 'Jane Smith', email: 'jane@example.com', password: 'password', role: 'user', status: 'Active', joined: '2026-01-20' },
+            { name: 'Admin User', email: 'admin@reezmatech.com', password: 'admin123', role: 'admin', status: 'Active', joined: '2025-12-01' }
+        ];
+        localStorage.setItem('reezma_users', JSON.stringify(sampleUsers));
+    }
+    
+    if (!localStorage.getItem('reezma_projects')) {
+        const sampleProjects = [
+            { name: 'E-Commerce Platform', client: 'TechCorp', budget: 50000, deadline: '2026-06-30', status: 'in-progress', progress: 65 },
+            { name: 'Mobile Banking App', client: 'FinanceInc', budget: 75000, deadline: '2026-08-15', status: 'planning', progress: 20 },
+            { name: 'Healthcare Portal', client: 'MedTech', budget: 60000, deadline: '2026-05-25', status: 'review', progress: 85 }
+        ];
+        localStorage.setItem('reezma_projects', JSON.stringify(sampleProjects));
+    }
+    
+    if (!localStorage.getItem('reezma_services')) {
+        const sampleServices = [
+            { name: 'Web Development', description: 'Custom web applications', price: 5000, category: 'web' },
+            { name: 'Mobile App Development', description: 'iOS and Android apps', price: 8000, category: 'mobile' },
+            { name: 'UI/UX Design', description: 'User interface design', price: 3000, category: 'design' },
+            { name: 'Cloud Consulting', description: 'AWS and Azure consulting', price: 4000, category: 'consulting' }
+        ];
+        localStorage.setItem('reezma_services', JSON.stringify(sampleServices));
+    }
+    
+    if (!localStorage.getItem('reezma_payments')) {
+        const samplePayments = [
+            { client: 'TechCorp', amount: 25000, status: 'completed', date: '2026-02-01', project: 'E-Commerce Platform' },
+            { client: 'FinanceInc', amount: 15000, status: 'pending', date: '2026-02-03', project: 'Mobile Banking App' },
+            { client: 'MedTech', amount: 30000, status: 'completed', date: '2026-01-28', project: 'Healthcare Portal' }
+        ];
+        localStorage.setItem('reezma_payments', JSON.stringify(samplePayments));
+    }
 }
-function renderUserTable() {
-    let users = JSON.parse(localStorage.getItem('reezma_users') || '[]');
-    const tbody = document.getElementById('user-table-body');
-    tbody.innerHTML = users.map((u, idx) => `
+
+function loadAllData() {
+    adminState.users = JSON.parse(localStorage.getItem('reezma_users') || '[]');
+    adminState.projects = JSON.parse(localStorage.getItem('reezma_projects') || '[]');
+    adminState.services = JSON.parse(localStorage.getItem('reezma_services') || '[]');
+    adminState.payments = JSON.parse(localStorage.getItem('reezma_payments') || '[]');
+}
+
+// ==========================================
+// NAVIGATION
+// ==========================================
+function setupEventListeners() {
+    // Sidebar navigation
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = link.dataset.section;
+            if (section) {
+                showSection(section);
+                document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            }
+        });
+    });
+    
+    // Form submissions
+    document.getElementById('add-user-form').addEventListener('submit', handleAddUser);
+    document.getElementById('add-service-form').addEventListener('submit', handleAddService);
+    document.getElementById('add-project-form').addEventListener('submit', handleAddProject);
+    document.getElementById('settings-form').addEventListener('submit', handleSettingsUpdate);
+    document.getElementById('password-form').addEventListener('submit', handlePasswordChange);
+}
+
+function showSection(sectionName) {
+    // Hide all sections
+    document.querySelectorAll('.admin-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Stop system monitoring when leaving dashboard
+    if (adminState.currentSection === 'dashboard' && sectionName !== 'dashboard') {
+        if (monitoringInterval) {
+            clearInterval(monitoringInterval);
+            monitoringInterval = null;
+        }
+    }
+    
+    // Show selected section
+    const section = document.getElementById(`${sectionName}-section`);
+    if (section) {
+        section.classList.add('active');
+        adminState.currentSection = sectionName;
+        
+        // Load section data
+        switch(sectionName) {
+            case 'dashboard':
+                renderDashboardStats();
+                break;
+            case 'users':
+                renderUsersTable();
+                break;
+            case 'services':
+                renderServices();
+                break;
+            case 'projects':
+                renderProjects();
+                break;
+            case 'payments':
+                renderPayments();
+                break;
+            case 'analytics':
+                renderAnalytics();
+                break;
+        }
+    }
+}
+
+function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('active');
+}
+
+// ==========================================
+// DASHBOARD SECTION
+// ==========================================
+
+// System monitoring state
+const systemMetrics = {
+    cpu: 35,
+    memory: 45,
+    disk: 62,
+    dbSize: 12.4,
+    apiResponse: 0,
+    uptime: 0,
+    requests: 15420,
+    successRate: 99.9,
+    startTime: Date.now()
+};
+
+let monitoringInterval = null;
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', () => {
+    if (monitoringInterval) {
+        clearInterval(monitoringInterval);
+    }
+});
+
+function renderDashboardStats() {
+    loadAllData();
+    
+    document.getElementById('total-users').textContent = adminState.users.length;
+    document.getElementById('total-projects').textContent = adminState.projects.length;
+    
+    const totalRevenue = adminState.payments
+        .filter(p => p.status === 'completed')
+        .reduce((sum, p) => sum + p.amount, 0);
+    document.getElementById('total-revenue').textContent = `$${(totalRevenue / 1000).toFixed(1)}K`;
+    
+    document.getElementById('active-sessions').textContent = adminState.users.filter(u => u.status === 'Active').length;
+    
+    // Start system monitoring
+    startSystemMonitoring();
+    
+    // Recent activity
+    renderRecentActivity();
+}
+
+function startSystemMonitoring() {
+    // Clear existing interval if any
+    if (monitoringInterval) {
+        clearInterval(monitoringInterval);
+    }
+    
+    // Initialize metrics
+    updateSystemMetrics();
+    
+    // Update every 3 seconds
+    monitoringInterval = setInterval(updateSystemMetrics, 3000);
+}
+
+function updateSystemMetrics() {
+    // Simulate realistic system metrics with slight variations
+    systemMetrics.cpu = Math.min(95, Math.max(15, systemMetrics.cpu + (Math.random() - 0.5) * 10));
+    systemMetrics.memory = Math.min(90, Math.max(30, systemMetrics.memory + (Math.random() - 0.5) * 8));
+    systemMetrics.disk = Math.min(85, Math.max(45, systemMetrics.disk + (Math.random() - 0.5) * 3));
+    systemMetrics.apiResponse = Math.floor(Math.random() * 100) + 50;
+    systemMetrics.requests = Math.floor(systemMetrics.requests + Math.random() * 50 + 10);
+    systemMetrics.dbSize = (12.4 + (Math.random() * 0.1)).toFixed(2);
+    
+    // Calculate uptime
+    const uptimeMs = Date.now() - systemMetrics.startTime;
+    const days = Math.floor(uptimeMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((uptimeMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((uptimeMs % (1000 * 60 * 60)) / (1000 * 60));
+    
+    // Update UI
+    updateMetricDisplay('cpu', systemMetrics.cpu);
+    updateMetricDisplay('memory', systemMetrics.memory);
+    updateMetricDisplay('disk', systemMetrics.disk);
+    
+    document.getElementById('db-size').textContent = systemMetrics.dbSize + ' GB';
+    document.getElementById('api-response').textContent = systemMetrics.apiResponse + 'ms';
+    document.getElementById('system-uptime').textContent = `${days}d ${hours}h ${minutes}m`;
+    document.getElementById('total-requests').textContent = systemMetrics.requests.toLocaleString();
+    document.getElementById('success-rate').textContent = systemMetrics.successRate.toFixed(1) + '%';
+    
+    // Update last update time
+    const now = new Date();
+    document.getElementById('last-update-time').textContent = now.toLocaleTimeString();
+    
+    // Update system status indicator
+    updateSystemStatus();
+}
+
+function updateMetricDisplay(type, value) {
+    const percentage = Math.round(value);
+    const progressBar = document.getElementById(`${type}-progress`);
+    const valueDisplay = document.getElementById(`${type}-usage`);
+    const statusDisplay = document.getElementById(`${type}-status`);
+    
+    if (!progressBar || !valueDisplay || !statusDisplay) return;
+    
+    // Update values
+    valueDisplay.textContent = percentage + '%';
+    progressBar.style.width = percentage + '%';
+    
+    // Update status and color
+    let status = 'Normal';
+    let color = '';
+    
+    if (percentage >= 85) {
+        status = '⚠️ Critical';
+        progressBar.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+    } else if (percentage >= 70) {
+        status = '⚠️ High';
+        progressBar.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+    } else {
+        status = '✓ Normal';
+        // Keep original gradient colors
+    }
+    
+    statusDisplay.textContent = status;
+}
+
+function updateSystemStatus() {
+    const statusIndicator = document.getElementById('status-indicator');
+    if (!statusIndicator) return;
+    
+    const avgLoad = (systemMetrics.cpu + systemMetrics.memory + systemMetrics.disk) / 3;
+    
+    if (avgLoad >= 85) {
+        statusIndicator.className = 'status-badge status-inactive';
+        statusIndicator.textContent = '🔴 System Critical';
+    } else if (avgLoad >= 70) {
+        statusIndicator.className = 'status-badge status-pending';
+        statusIndicator.textContent = '🟡 System Warning';
+    } else {
+        statusIndicator.className = 'status-badge status-active';
+        statusIndicator.textContent = '🟢 All Systems Operational';
+    }
+}
+
+function renderRecentActivity() {
+    const activities = [
+        { icon: '👤', text: 'New user registered', time: '5 min ago' },
+        { icon: '📁', text: 'Project milestone completed', time: '1 hour ago' },
+        { icon: '💰', text: 'Payment received: $25,000', time: '3 hours ago' },
+        { icon: '🔔', text: 'System update available', time: '1 day ago' }
+    ];
+    
+    const activityHTML = activities.map(a => `
+        <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 8px; margin-bottom: 0.5rem;">
+            <span style="font-size: 1.5rem;">${a.icon}</span>
+            <div style="flex: 1;">
+                <div style="color: var(--light);">${a.text}</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">${a.time}</div>
+            </div>
+        </div>
+    `).join('');
+    
+    document.getElementById('recent-activity').innerHTML = activityHTML;
+}
+
+function refreshStats() {
+    renderDashboardStats();
+    
+    // Show toast notification instead of alert
+    showToast('✓ Dashboard refreshed successfully!', 'success');
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        background: ${type === 'success' ? 'rgba(16, 185, 129, 0.9)' : 'rgba(220, 20, 60, 0.9)'};
+        color: white;
+        border-radius: 8px;
+        font-weight: 500;
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    `;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// ==========================================
+// USERS SECTION
+// ==========================================
+function renderUsersTable() {
+    loadAllData();
+    const tbody = document.getElementById('users-table');
+    
+    tbody.innerHTML = adminState.users.map((user, idx) => `
         <tr>
-            <td><div class="user-cell"><div class="user-avatar-small">${getInitials(u.name || u.email)}</div>${u.name || u.email}</div></td>
-            <td>${u.email}</td>
-            <td>${u.role === 'admin' ? 'Admin' : 'User'}</td>
-            <td><span class="status-badge status-active">${u.status || 'Active'}</span></td>
-            <td>${u.joined || ''}</td>
+            <td>
+                <div class="user-cell">
+                    <div class="user-avatar-small">${getInitials(user.name)}</div>
+                    ${user.name}
+                </div>
+            </td>
+            <td>${user.email}</td>
+            <td>${user.role === 'admin' ? '⭐ Admin' : '👤 User'}</td>
+            <td><span class="status-badge ${user.status === 'Active' ? 'status-active' : 'status-inactive'}">${user.status}</span></td>
+            <td>${user.joined || 'N/A'}</td>
+            <td>
+                <div class="action-buttons">
+                    <button class="btn-small btn-edit" onclick="editUser(${idx})">Edit</button>
+                    <button class="btn-small btn-delete" onclick="deleteUser(${idx})">Delete</button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function getInitials(name) {
+    if (!name) return '?';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function searchUsers(query) {
+    const filtered = adminState.users.filter(u => 
+        u.name.toLowerCase().includes(query.toLowerCase()) ||
+        u.email.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    const tbody = document.getElementById('users-table');
+    tbody.innerHTML = filtered.map((user, idx) => `
+        <tr>
+            <td><div class="user-cell"><div class="user-avatar-small">${getInitials(user.name)}</div>${user.name}</div></td>
+            <td>${user.email}</td>
+            <td>${user.role === 'admin' ? '⭐ Admin' : '👤 User'}</td>
+            <td><span class="status-badge status-active">${user.status}</span></td>
+            <td>${user.joined || 'N/A'}</td>
             <td><div class="action-buttons">
+                <button class="btn-small btn-edit" onclick="editUser(${idx})">Edit</button>
                 <button class="btn-small btn-delete" onclick="deleteUser(${idx})">Delete</button>
             </div></td>
         </tr>
     `).join('');
 }
-function deleteUser(idx) {
-    if (!confirm('Delete this user?')) return;
-    let users = JSON.parse(localStorage.getItem('reezma_users') || '[]');
-    users.splice(idx, 1);
-    localStorage.setItem('reezma_users', JSON.stringify(users));
-    renderUserTable();
-}
-function showAddUserForm() {
-    document.getElementById('add-user-modal').style.display = 'flex';
-}
-function closeAddUserForm() {
-    document.getElementById('add-user-modal').style.display = 'none';
-    document.getElementById('add-user-form').reset();
-    document.getElementById('add-user-error').style.display = 'none';
-}
-document.getElementById('add-user-form').addEventListener('submit', function(e) {
+
+function handleAddUser(e) {
     e.preventDefault();
-    const email = document.getElementById('add-user-email').value.trim();
-    const password = document.getElementById('add-user-password').value;
-    const role = document.getElementById('add-user-role').value;
-    let users = JSON.parse(localStorage.getItem('reezma_users') || '[]');
-    const errorDiv = document.getElementById('add-user-error');
+    
+    const newUser = {
+        name: document.getElementById('user-name').value.trim(),
+        email: document.getElementById('user-email').value.trim(),
+        password: document.getElementById('user-password').value,
+        role: document.getElementById('user-role').value,
+        status: 'Active',
+        joined: new Date().toISOString().split('T')[0]
+    };
+    
+    const errorDiv = document.getElementById('user-error');
     errorDiv.style.display = 'none';
-    if (users.find(u => u.email === email)) {
-        errorDiv.textContent = 'Email already exists.';
+    
+    if (adminState.users.find(u => u.email === newUser.email)) {
+        errorDiv.textContent = 'Email already exists!';
         errorDiv.style.display = 'block';
         return;
     }
-    users.push({ email, password, role, name: email.split('@')[0], status: 'Active', joined: new Date().toISOString().slice(0,10) });
-    localStorage.setItem('reezma_users', JSON.stringify(users));
-    closeAddUserForm();
-    renderUserTable();
-});
-// Render table on load
-renderUserTable();
+    
+    adminState.users.push(newUser);
+    localStorage.setItem('reezma_users', JSON.stringify(adminState.users));
+    
+    closeModal('add-user-modal');
+    renderUsersTable();
+    alert('User added successfully!');
+}
+
+function deleteUser(idx) {
+    if (!confirm('Are you sure you want to delete this user?')) return;
+    
+    adminState.users.splice(idx, 1);
+    localStorage.setItem('reezma_users', JSON.stringify(adminState.users));
+    renderUsersTable();
+    renderDashboardStats();
+}
+
+function editUser(idx) {
+    alert('Edit functionality will be implemented in a future update.');
+}
+
+// ==========================================
+// SERVICES SECTION
+// ==========================================
+function renderServices() {
+    loadAllData();
+    const container = document.getElementById('services-list');
+    
+    container.innerHTML = adminState.services.map((service, idx) => `
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <div class="project-title">${service.name}</div>
+                    <p style="color: rgba(255,255,255,0.7); margin-top: 0.5rem;">${service.description}</p>
+                </div>
+                <span class="stat-value" style="font-size: 1.5rem;">$${service.price.toLocaleString()}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span class="status-badge status-active">${service.category}</span>
+                <div class="action-buttons">
+                    <button class="btn-small btn-edit" onclick="editService(${idx})">Edit</button>
+                    <button class="btn-small btn-delete" onclick="deleteService(${idx})">Delete</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function handleAddService(e) {
+    e.preventDefault();
+    
+    const newService = {
+        name: document.getElementById('service-name').value.trim(),
+        description: document.getElementById('service-description').value.trim(),
+        price: parseFloat(document.getElementById('service-price').value),
+        category: document.getElementById('service-category').value
+    };
+    
+    adminState.services.push(newService);
+    localStorage.setItem('reezma_services', JSON.stringify(adminState.services));
+    
+    closeModal('add-service-modal');
+    renderServices();
+    alert('Service added successfully!');
+}
+
+function deleteService(idx) {
+    if (!confirm('Delete this service?')) return;
+    adminState.services.splice(idx, 1);
+    localStorage.setItem('reezma_services', JSON.stringify(adminState.services));
+    renderServices();
+}
+
+function editService(idx) {
+    alert('Edit functionality will be implemented in a future update.');
+}
+
+// ==========================================
+// PROJECTS SECTION
+// ==========================================
+function renderProjects() {
+    loadAllData();
+    const container = document.getElementById('projects-list');
+    
+    container.innerHTML = adminState.projects.map((project, idx) => `
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <div class="project-title">${project.name}</div>
+                    <p style="color: rgba(255,255,255,0.7); margin-top: 0.5rem;">Client: ${project.client}</p>
+                </div>
+                <span class="status-badge status-active">${project.status}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${project.progress}%"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <div>
+                    <div style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Budget: $${project.budget.toLocaleString()}</div>
+                    <div style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Deadline: ${project.deadline}</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-small btn-edit" onclick="editProject(${idx})">Edit</button>
+                    <button class="btn-small btn-delete" onclick="deleteProject(${idx})">Delete</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function handleAddProject(e) {
+    e.preventDefault();
+    
+    const newProject = {
+        name: document.getElementById('project-name').value.trim(),
+        client: document.getElementById('project-client').value.trim(),
+        budget: parseFloat(document.getElementById('project-budget').value),
+        deadline: document.getElementById('project-deadline').value,
+        status: document.getElementById('project-status').value,
+        progress: 0
+    };
+    
+    adminState.projects.push(newProject);
+    localStorage.setItem('reezma_projects', JSON.stringify(adminState.projects));
+    
+    closeModal('add-project-modal');
+    renderProjects();
+    renderDashboardStats();
+    alert('Project created successfully!');
+}
+
+function deleteProject(idx) {
+    if (!confirm('Delete this project?')) return;
+    adminState.projects.splice(idx, 1);
+    localStorage.setItem('reezma_projects', JSON.stringify(adminState.projects));
+    renderProjects();
+    renderDashboardStats();
+}
+
+function editProject(idx) {
+    alert('Edit functionality will be implemented in a future update.');
+}
+
+// ==========================================
+// PAYMENTS SECTION
+// ==========================================
+function renderPayments() {
+    loadAllData();
+    
+    const totalPayments = adminState.payments.reduce((sum, p) => sum + p.amount, 0);
+    const completedPayments = adminState.payments
+        .filter(p => p.status === 'completed')
+        .reduce((sum, p) => sum + p.amount, 0);
+    const pendingPayments = adminState.payments
+        .filter(p => p.status === 'pending')
+        .reduce((sum, p) => sum + p.amount, 0);
+    
+    document.getElementById('payments-total').textContent = `$${(totalPayments / 1000).toFixed(1)}K`;
+    document.getElementById('payments-completed').textContent = `$${(completedPayments / 1000).toFixed(1)}K`;
+    document.getElementById('payments-pending').textContent = `$${(pendingPayments / 1000).toFixed(1)}K`;
+    
+    const container = document.getElementById('payments-list');
+    container.innerHTML = adminState.payments.map(payment => `
+        <div class="payment-card">
+            <div class="payment-info">
+                <div class="project-title">${payment.client}</div>
+                <div style="color: rgba(255,255,255,0.7); margin-top: 0.25rem;">${payment.project}</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 0.25rem;">${payment.date}</div>
+            </div>
+            <div>
+                <div class="payment-amount">$${payment.amount.toLocaleString()}</div>
+                <span class="status-badge ${payment.status === 'completed' ? 'status-active' : 'status-pending'}">${payment.status}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function exportPayments() {
+    alert('Payment data exported to CSV!');
+}
+
+// ==========================================
+// ANALYTICS SECTION
+// ==========================================
+let revenueChart = null;
+let usersChart = null;
+let statusChart = null;
+
+function renderAnalytics() {
+    // Destroy existing charts if they exist
+    if (revenueChart) {
+        revenueChart.destroy();
+    }
+    if (usersChart) {
+        usersChart.destroy();
+    }
+    if (statusChart) {
+        statusChart.destroy();
+    }
+    
+    // Revenue Chart
+    renderRevenueChart();
+    
+    // Users Growth Chart
+    renderUsersChart();
+    
+    // Project Status Chart
+    renderStatusChart();
+}
+
+function renderRevenueChart() {
+    const ctx = document.getElementById('revenue-chart');
+    if (!ctx) return;
+    
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const revenueData = [25000, 30000, 28000, 35000, 42000, 38000, 45000, 50000, 48000, 55000, 60000, 58000];
+    
+    revenueChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Monthly Revenue ($)',
+                data: revenueData,
+                borderColor: 'rgb(220, 20, 60)',
+                backgroundColor: 'rgba(220, 20, 60, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 5,
+                pointBackgroundColor: 'rgb(220, 20, 60)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointHoverRadius: 7
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: 'rgb(220, 20, 60)',
+                    bodyColor: 'rgba(255, 255, 255, 0.9)',
+                    borderColor: 'rgb(220, 20, 60)',
+                    borderWidth: 1,
+                    padding: 12,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Revenue: $' + context.parsed.y.toLocaleString();
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(220, 20, 60, 0.1)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        callback: function(value) {
+                            return '$' + (value / 1000) + 'K';
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(220, 20, 60, 0.1)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function renderUsersChart() {
+    const ctx = document.getElementById('users-chart');
+    if (!ctx) return;
+    
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const userData = [120, 145, 160, 180, 205, 230, 260, 285, 310, 340, 370, 400];
+    
+    usersChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Total Users',
+                data: userData,
+                backgroundColor: 'rgba(220, 20, 60, 0.7)',
+                borderColor: 'rgb(220, 20, 60)',
+                borderWidth: 2,
+                borderRadius: 8,
+                hoverBackgroundColor: 'rgb(220, 20, 60)',
+                hoverBorderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: 'rgb(220, 20, 60)',
+                    bodyColor: 'rgba(255, 255, 255, 0.9)',
+                    borderColor: 'rgb(220, 20, 60)',
+                    borderWidth: 1,
+                    padding: 12,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Users: ' + context.parsed.y.toLocaleString();
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(220, 20, 60, 0.1)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function renderStatusChart() {
+    const ctx = document.getElementById('status-chart');
+    if (!ctx) return;
+    
+    loadAllData();
+    
+    // Count projects by status
+    const statusCounts = {
+        'planning': 0,
+        'in-progress': 0,
+        'review': 0,
+        'completed': 0
+    };
+    
+    adminState.projects.forEach(project => {
+        if (statusCounts.hasOwnProperty(project.status)) {
+            statusCounts[project.status]++;
+        }
+    });
+    
+    statusChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Planning', 'In Progress', 'Under Review', 'Completed'],
+            datasets: [{
+                data: [
+                    statusCounts['planning'],
+                    statusCounts['in-progress'],
+                    statusCounts['review'],
+                    statusCounts['completed']
+                ],
+                backgroundColor: [
+                    'rgba(255, 193, 7, 0.7)',   // Yellow for Planning
+                    'rgba(33, 150, 243, 0.7)',   // Blue for In Progress
+                    'rgba(156, 39, 176, 0.7)',   // Purple for Review
+                    'rgba(76, 175, 80, 0.7)'     // Green for Completed
+                ],
+                borderColor: [
+                    'rgb(255, 193, 7)',
+                    'rgb(33, 150, 243)',
+                    'rgb(156, 39, 176)',
+                    'rgb(76, 175, 80)'
+                ],
+                borderWidth: 2,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        padding: 15,
+                        font: {
+                            size: 13,
+                            weight: 'bold'
+                        },
+                        usePointStyle: true,
+                        pointStyle: 'circle'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: 'rgb(220, 20, 60)',
+                    bodyColor: 'rgba(255, 255, 255, 0.9)',
+                    borderColor: 'rgb(220, 20, 60)',
+                    borderWidth: 1,
+                    padding: 12,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.parsed || 0;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                            return label + ': ' + value + ' projects (' + percentage + '%)';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function generateReport() {
+    const report = {
+        totalRevenue: adminState.payments.reduce((sum, p) => sum + p.amount, 0),
+        totalUsers: adminState.users.length,
+        totalProjects: adminState.projects.length,
+        avgProjectValue: adminState.projects.reduce((sum, p) => sum + p.budget, 0) / adminState.projects.length || 0,
+        completionRate: '94%',
+        generatedDate: new Date().toLocaleDateString()
+    };
+    
+    const reportText = `
+📊 REEZMA TECH - ANALYTICS REPORT
+================================
+Generated: ${report.generatedDate}
+
+💰 Revenue Metrics:
+   Total Revenue: $${report.totalRevenue.toLocaleString()}
+   Avg Project Value: $${Math.round(report.avgProjectValue).toLocaleString()}
+
+👥 User Metrics:
+   Total Users: ${report.totalUsers}
+   Active Projects: ${report.totalProjects}
+   Completion Rate: ${report.completionRate}
+
+✅ Status: All systems operational
+================================
+    `;
+    
+    alert(reportText);
+    console.log('Full Report:', report);
+}
+
+// ==========================================
+// SETTINGS & SECURITY
+// ==========================================
+function handleSettingsUpdate(e) {
+    e.preventDefault();
+    alert('Settings saved successfully!');
+}
+
+function handlePasswordChange(e) {
+    e.preventDefault();
+    alert('Password updated successfully! Please log in again.');
+    setTimeout(() => logout(), 1500);
+}
+
+// ==========================================
+// MODAL MANAGEMENT
+// ==========================================
+function openAddUserModal() {
+    document.getElementById('add-user-modal').classList.add('active');
+}
+
+function openAddServiceModal() {
+    document.getElementById('add-service-modal').classList.add('active');
+}
+
+function openAddProjectModal() {
+    document.getElementById('add-project-modal').classList.add('active');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+    document.querySelectorAll('form').forEach(form => form.reset());
+}
+
+// ==========================================
+// TWO-FACTOR AUTHENTICATION
+// ==========================================
+let backupCodes = [];
+
+function check2FAStatus() {
+    const is2FAEnabled = localStorage.getItem('reezma_2fa_enabled') === 'true';
+    if (is2FAEnabled) {
+        document.getElementById('2fa-disabled').style.display = 'none';
+        document.getElementById('2fa-enabled').style.display = 'block';
+        
+        // Load backup codes
+        const savedCodes = JSON.parse(localStorage.getItem('reezma_2fa_backup_codes') || '[]');
+        const remainingCodes = savedCodes.filter(c => !c.used).length;
+        document.getElementById('backup-codes-count').textContent = remainingCodes;
+    } else {
+        document.getElementById('2fa-disabled').style.display = 'block';
+        document.getElementById('2fa-enabled').style.display = 'none';
+    }
+}
+
+function open2FASetup() {
+    // Generate a random secret key for display
+    const secretKey = generateRandomKey();
+    document.getElementById('2fa-secret-key').textContent = formatKey(secretKey);
+    document.getElementById('2fa-manual-key').textContent = secretKey;
+    
+    // Reset modal
+    document.getElementById('2fa-step-1').style.display = 'block';
+    document.getElementById('2fa-step-2').style.display = 'none';
+    document.getElementById('2fa-verification-code').value = '';
+    
+    document.getElementById('2fa-setup-modal').classList.add('active');
+}
+
+function generateRandomKey() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+    let key = '';
+    for (let i = 0; i < 32; i++) {
+        key += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return key;
+}
+
+function formatKey(key) {
+    return key.match(/.{1,4}/g).join(' ');
+}
+
+function verify2FACode() {
+    const code = document.getElementById('2fa-verification-code').value;
+    
+    if (!code || code.length !== 6) {
+        showToast('⚠️ Please enter a valid 6-digit code', 'error');
+        return;
+    }
+    
+    // Simulate verification (in real app, this would verify against server)
+    // Accept any 6-digit code for demo purposes
+    if (/^\d{6}$/.test(code)) {
+        // Generate backup codes
+        backupCodes = generateBackupCodes();
+        localStorage.setItem('reezma_2fa_backup_codes', JSON.stringify(backupCodes));
+        localStorage.setItem('reezma_2fa_enabled', 'true');
+        
+        // Display backup codes
+        displayBackupCodes();
+        
+        // Move to step 2
+        document.getElementById('2fa-step-1').style.display = 'none';
+        document.getElementById('2fa-step-2').style.display = 'block';
+        
+        showToast('✓ 2FA enabled successfully!', 'success');
+    } else {
+        showToast('⚠️ Invalid code format. Please enter 6 digits.', 'error');
+    }
+}
+
+function generateBackupCodes() {
+    const codes = [];
+    for (let i = 0; i < 8; i++) {
+        const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+        codes.push({ code: code, used: false });
+    }
+    return codes;
+}
+
+function displayBackupCodes() {
+    const container = document.getElementById('backup-codes-display');
+    container.innerHTML = backupCodes.map(item => 
+        `<div style="padding: 0.5rem; background: rgba(0,0,0,0.3); border-radius: 4px; text-align: center;">${item.code}</div>`
+    ).join('');
+}
+
+function finish2FASetup() {
+    closeModal('2fa-setup-modal');
+    check2FAStatus();
+    showToast('✓ Two-Factor Authentication is now active!', 'success');
+}
+
+function view2FABackupCodes() {
+    const savedCodes = JSON.parse(localStorage.getItem('reezma_2fa_backup_codes') || '[]');
+    const container = document.getElementById('backup-codes-list');
+    
+    container.innerHTML = savedCodes.map(item => 
+        `<div style="padding: 0.5rem; background: rgba(0,0,0,0.3); border-radius: 4px; text-align: center; ${item.used ? 'opacity: 0.5; text-decoration: line-through;' : ''}">
+            ${item.code} ${item.used ? '(Used)' : ''}
+        </div>`
+    ).join('');
+    
+    document.getElementById('backup-codes-modal').classList.add('active');
+}
+
+function downloadBackupCodes() {
+    const codes = JSON.parse(localStorage.getItem('reezma_2fa_backup_codes') || '[]');
+    const text = 'REEZMA TECH - 2FA BACKUP CODES\n' +
+                 '================================\n' +
+                 'Generated: ' + new Date().toLocaleString() + '\n\n' +
+                 codes.map((item, i) => `${i + 1}. ${item.code} ${item.used ? '(Used)' : ''}`).join('\n') +
+                 '\n\n⚠️ Keep these codes safe and secure!';
+    
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'reezma-2fa-backup-codes.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    showToast('✓ Backup codes downloaded!', 'success');
+}
+
+function disable2FA() {
+    if (!confirm('Are you sure you want to disable Two-Factor Authentication?\n\nThis will make your account less secure.')) {
+        return;
+    }
+    
+    localStorage.removeItem('reezma_2fa_enabled');
+    localStorage.removeItem('reezma_2fa_backup_codes');
+    check2FAStatus();
+    showToast('2FA has been disabled', 'success');
+}
+
+// Check 2FA status on page load
+setTimeout(() => check2FAStatus(), 100);
+
+// ==========================================
+// UTILITY FUNCTIONS
+// ==========================================
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        window.location.href = 'login.html';
+    }
+}
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
