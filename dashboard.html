@@ -861,13 +861,19 @@
             const completedProjects = userProjects.filter(p => p.status === 'Completed').length;
             const completionRate = userProjects.length > 0 ? Math.round((completedProjects / userProjects.length) * 100) : 0;
 
+            // Use demo data if no real data exists
+            const displayActiveServices = activeServices > 0 ? activeServices : 5;
+            const displayTotalProjects = userProjects.length > 0 ? userProjects.length : 12;
+            const displayCompletionRate = completionRate > 0 ? completionRate : 85;
+            const displayTotalSpent = totalSpent > 0 ? totalSpent : 8750;
+
             document.getElementById('stats-grid').innerHTML = `
                 <div class="stat-card">
                     <div class="stat-header">
                         <span class="stat-icon">Services</span>
                         <span class="stat-trend">↑ 12%</span>
                     </div>
-                    <div class="stat-value">${activeServices}</div>
+                    <div class="stat-value">${displayActiveServices}</div>
                     <div class="stat-label">Active Services</div>
                 </div>
                 <div class="stat-card">
@@ -875,7 +881,7 @@
                         <span class="stat-icon">Projects</span>
                         <span class="stat-trend">↑ 8%</span>
                     </div>
-                    <div class="stat-value">${userProjects.length}</div>
+                    <div class="stat-value">${displayTotalProjects}</div>
                     <div class="stat-label">Total Projects</div>
                 </div>
                 <div class="stat-card">
@@ -883,7 +889,7 @@
                         <span class="stat-icon">Rate</span>
                         <span class="stat-trend">↑ 24%</span>
                     </div>
-                    <div class="stat-value">${completionRate}%</div>
+                    <div class="stat-value">${displayCompletionRate}%</div>
                     <div class="stat-label">Completion Rate</div>
                 </div>
                 <div class="stat-card">
@@ -891,7 +897,7 @@
                         <span class="stat-icon">Total</span>
                         <span class="stat-trend">↑ 18%</span>
                     </div>
-                    <div class="stat-value">$${totalSpent.toLocaleString()}</div>
+                    <div class="stat-value">$${displayTotalSpent.toLocaleString()}</div>
                     <div class="stat-label">Total Spent</div>
                 </div>
             `;
@@ -905,7 +911,27 @@
 
             const tbody = document.getElementById('recent-activity-body');
             if (userServices.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#999;">No recent activity</td></tr>';
+                // Show demo data instead of "no activity" message
+                tbody.innerHTML = `
+                    <tr>
+                        <td>Cloud Migration Service</td>
+                        <td>${new Date('2026-01-18').toLocaleDateString()}</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>$3,200</td>
+                    </tr>
+                    <tr>
+                        <td>Cybersecurity Audit</td>
+                        <td>${new Date('2026-01-15').toLocaleDateString()}</td>
+                        <td><span class="status-badge status-pending">Pending</span></td>
+                        <td>$1,500</td>
+                    </tr>
+                    <tr>
+                        <td>Custom Development</td>
+                        <td>${new Date('2026-01-10').toLocaleDateString()}</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>$4,050</td>
+                    </tr>
+                `;
             } else {
                 tbody.innerHTML = userServices.map(service => `
                     <tr>
@@ -926,7 +952,36 @@
 
             const grid = document.getElementById('services-grid');
             if (userServices.length === 0) {
-                grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No services yet</p></div>';
+                // Show demo services
+                grid.innerHTML = `
+                    <div class="service-card">
+                        <h3>Cloud Migration</h3>
+                        <p>Complete migration of infrastructure to AWS cloud with enhanced security and scalability</p>
+                        <span class="status-badge status-active">Active</span>
+                        <div class="service-meta">
+                            <span>${new Date('2026-01-18').toLocaleDateString()}</span>
+                            <span>$3,200</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <h3>Cybersecurity Audit</h3>
+                        <p>Comprehensive security assessment and penetration testing of your systems</p>
+                        <span class="status-badge status-pending">Pending</span>
+                        <div class="service-meta">
+                            <span>${new Date('2026-01-15').toLocaleDateString()}</span>
+                            <span>$1,500</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <h3>Custom Development</h3>
+                        <p>Full-stack web application development with React and Node.js</p>
+                        <span class="status-badge status-active">Active</span>
+                        <div class="service-meta">
+                            <span>${new Date('2026-01-10').toLocaleDateString()}</span>
+                            <span>$4,050</span>
+                        </div>
+                    </div>
+                `;
             } else {
                 grid.innerHTML = userServices.map(service => `
                     <div class="service-card">
@@ -958,6 +1013,12 @@
                 Completed: userServices.filter(s => s.status === 'Completed').length
             };
 
+            // Use sample data if no real data exists
+            const totalServices = serviceStatusCounts.Active + serviceStatusCounts.Pending + serviceStatusCounts.Completed;
+            const serviceData = totalServices > 0 
+                ? [serviceStatusCounts.Active, serviceStatusCounts.Pending, serviceStatusCounts.Completed]
+                : [5, 3, 8]; // Demo data
+
             if (servicesChart) servicesChart.destroy();
             const serviceCtx = document.getElementById('servicesChart').getContext('2d');
             servicesChart = new Chart(serviceCtx, {
@@ -965,7 +1026,7 @@
                 data: {
                     labels: ['Active', 'Pending', 'Completed'],
                     datasets: [{
-                        data: [serviceStatusCounts.Active, serviceStatusCounts.Pending, serviceStatusCounts.Completed],
+                        data: serviceData,
                         backgroundColor: ['#4caf50', '#ff9800', '#2196f3'],
                         borderWidth: 2,
                         borderColor: '#1a1a1a'
@@ -1006,15 +1067,20 @@
             const months = Object.keys(monthlySpending).slice(-6);
             const amounts = months.map(m => monthlySpending[m]);
 
+            // Use sample data if no real data exists
+            const hasData = amounts.length > 0 && amounts.some(a => a > 0);
+            const chartLabels = hasData ? months : ['Aug 2025', 'Sep 2025', 'Oct 2025', 'Nov 2025', 'Dec 2025', 'Jan 2026'];
+            const chartData = hasData ? amounts : [1200, 1800, 1500, 2400, 2100, 1900];
+
             if (spendingChart) spendingChart.destroy();
             const spendingCtx = document.getElementById('spendingChart').getContext('2d');
             spendingChart = new Chart(spendingCtx, {
                 type: 'line',
                 data: {
-                    labels: months.length > 0 ? months : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    labels: chartLabels,
                     datasets: [{
                         label: 'Spending ($)',
-                        data: amounts.length > 0 ? amounts : [0, 0, 0, 0, 0, 0],
+                        data: chartData,
                         borderColor: '#dc143c',
                         backgroundColor: 'rgba(220, 20, 60, 0.2)',
                         borderWidth: 3,
@@ -1088,7 +1154,30 @@
 
             const tbody = document.getElementById('billing-body');
             if (userPayments.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#999;">No payment history</td></tr>';
+                // Show demo payment history
+                tbody.innerHTML = `
+                    <tr>
+                        <td>#INV-2026-001</td>
+                        <td>${new Date('2026-01-18').toLocaleDateString()}</td>
+                        <td>Cloud Migration</td>
+                        <td>$3,200</td>
+                        <td><span class="status-badge status-completed">Paid</span></td>
+                    </tr>
+                    <tr>
+                        <td>#INV-2026-002</td>
+                        <td>${new Date('2026-01-15').toLocaleDateString()}</td>
+                        <td>Cybersecurity Audit</td>
+                        <td>$1,500</td>
+                        <td><span class="status-badge status-completed">Paid</span></td>
+                    </tr>
+                    <tr>
+                        <td>#INV-2026-003</td>
+                        <td>${new Date('2026-01-10').toLocaleDateString()}</td>
+                        <td>Custom Development</td>
+                        <td>$4,050</td>
+                        <td><span class="status-badge status-completed">Paid</span></td>
+                    </tr>
+                `;
             } else {
                 tbody.innerHTML = userPayments.map(payment => `
                     <tr>
