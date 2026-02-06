@@ -63,7 +63,7 @@
   <img src="images/screenshots/dashboard.png" alt="User Dashboard" width="100%">
 </p>
 
-*Features: Personal analytics, project overview, and user statistics*
+*Features: Personal analytics with dynamic stats from localStorage, Chart.js visualizations (service status doughnut chart, spending line chart), billing history, notifications system, profile settings, FAQ help section, and mobile-responsive interface*
 
 ---
 
@@ -212,8 +212,18 @@
 - **industries.html** - Industry-specific solutions and case studies
 - **login.html** - Split-screen authentication with role-based access
 - **signup.html** - User registration with form validation
-- **dashboard.html** - User dashboard with personal analytics
+- **dashboard.html** - User dashboard with personal analytics and service management
 - **admin.html** - Full-featured admin panel with real-time monitoring
+
+### User Dashboard Sections
+
+1. **📊 Dashboard** - Personal statistics with active services, projects, completion rate, and spending overview
+2. **🛠️ My Services** - View all subscribed services with status and pricing
+3. **📈 Analytics** - Interactive Chart.js visualizations (service status, spending trends)
+4. **💳 Billing** - Payment history, invoices, and transaction records
+5. **🔔 Notifications** - Real-time alerts and system messages
+6. **⚙️ Settings** - Profile management, password change, and preferences
+7. **❓ Help & Support** - FAQ, support contact, and documentation
 
 ### Admin Dashboard Sections
 
