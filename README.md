@@ -20,6 +20,106 @@
 
 ---
 
+## 📸 Screenshots
+
+### Homepage (index.html)
+<p align="center">
+  <img src="images/screenshots/homepage.png" alt="Reezma Tech Homepage" width="100%">
+</p>
+
+*Features: Hero section with animated particles, statistics counter, project portfolio, client testimonials, and contact form*
+
+---
+
+### Services Page (services.html)
+<p align="center">
+  <img src="images/screenshots/services.png" alt="Services Page" width="100%">
+</p>
+
+*Features: Comprehensive service offerings, pricing cards, and detailed feature lists*
+
+---
+
+### Industries Page (industries.html)
+<p align="center">
+  <img src="images/screenshots/industries.png" alt="Industries Page" width="100%">
+</p>
+
+*Features: Industry-specific solutions and case studies*
+
+---
+
+### Login Page (login.html)
+<p align="center">
+  <img src="images/screenshots/login.png" alt="Login Page" width="100%">
+</p>
+
+*Features: Split-screen design with role-based authentication*
+
+---
+
+### User Dashboard (dashboard.html)
+<p align="center">
+  <img src="images/screenshots/dashboard.png" alt="User Dashboard" width="100%">
+</p>
+
+*Features: Personal analytics, project overview, and user statistics*
+
+---
+
+### Admin Dashboard (admin.html)
+
+#### Dashboard Overview
+<p align="center">
+  <img src="images/screenshots/admin-dashboard.png" alt="Admin Dashboard" width="100%">
+</p>
+
+*Features: Real-time system monitoring, live statistics, and activity feed*
+
+#### Analytics Section
+<p align="center">
+  <img src="images/screenshots/admin-analytics.png" alt="Admin Analytics" width="100%">
+</p>
+
+*Features: Interactive Chart.js visualizations - Revenue overview, User growth, Project distribution*
+
+#### User Management
+<p align="center">
+  <img src="images/screenshots/admin-users.png" alt="User Management" width="100%">
+</p>
+
+*Features: Complete CRUD operations, search functionality, role management*
+
+#### Two-Factor Authentication
+<p align="center">
+  <img src="images/screenshots/admin-2fa.png" alt="Two-Factor Authentication" width="100%">
+</p>
+
+*Features: QR code setup, backup codes generation, secure account protection*
+
+---
+
+### 📱 Mobile Responsive Design
+
+<p align="center">
+  <img src="images/screenshots/mobile-responsive.png" alt="Mobile Responsive Views" width="80%">
+</p>
+
+*Fully optimized for all devices - from 360px (small phones) to 1600px+ (large desktops)*
+
+<details>
+<summary>View More Mobile Screenshots</summary>
+
+<p align="center">
+  <img src="images/screenshots/mobile-homepage.png" alt="Mobile Homepage" width="300">
+  <img src="images/screenshots/mobile-services.png" alt="Mobile Services" width="300">
+  <img src="images/screenshots/mobile-admin.png" alt="Mobile Admin" width="300">
+</p>
+
+</details>
+
+---
+
 ## ✨ Features
 
 ### Core Website Features
@@ -227,7 +327,21 @@ Reezma-tech-services/
 ├── Reezstyle.css       # Main stylesheet (comprehensive)
 ├── script.js           # JavaScript functionality
 ├── images/             # Project images and assets
-│   └── projects/       # Project portfolio images
+│   ├── projects/       # Project portfolio images
+│   └── screenshots/    # Website page screenshots
+│       ├── homepage.png
+│       ├── services.png
+│       ├── industries.png
+│       ├── login.png
+│       ├── dashboard.png
+│       ├── admin-dashboard.png
+│       ├── admin-analytics.png
+│       ├── admin-users.png
+│       ├── admin-2fa.png
+│       ├── mobile-responsive.png
+│       ├── mobile-homepage.png
+│       ├── mobile-services.png
+│       └── mobile-admin.png
 └── README.md           # Documentation
 ```
 
@@ -445,7 +559,51 @@ If you find this project useful:
 
 ---
 
-## 📬 Contact
+## � Adding Screenshots
+
+To populate the screenshots in this README:
+
+### 1. Take Screenshots
+- Open each page in your browser
+- Use browser screenshot tools or press `PrtScn`
+- Recommended size: 1920x1080 for desktop views
+- For mobile: 375x812 (iPhone size) or similar
+
+### 2. Name Your Files
+Save screenshots with these exact names in `images/screenshots/`:
+- `homepage.png` - Homepage (index.html)
+- `services.png` - Services page
+- `industries.png` - Industries page
+- `login.png` - Login page
+- `dashboard.png` - User dashboard
+- `admin-dashboard.png` - Admin dashboard overview
+- `admin-analytics.png` - Admin analytics section
+- `admin-users.png` - Admin user management
+- `admin-2fa.png` - 2FA setup modal
+- `mobile-responsive.png` - Multiple mobile views combined
+- `mobile-homepage.png` - Mobile homepage
+- `mobile-services.png` - Mobile services
+- `mobile-admin.png` - Mobile admin view
+
+### 3. Optimize Images (Optional)
+```bash
+# Install imagemin-cli (optional, for optimization)
+npm install -g imagemin-cli
+
+# Optimize screenshots
+imagemin images/screenshots/*.png --out-dir=images/screenshots/
+```
+
+### 4. Commit and Push
+```bash
+git add images/screenshots/
+git commit -m "docs: Add website screenshots to README"
+git push origin main
+```
+
+---
+
+## �📬 Contact
 
 **Reezma Tech Services**
 
