@@ -97,26 +97,7 @@
 
 *Features: QR code setup, backup codes generation, secure account protection*
 
----
 
-### 📱 Mobile Responsive Design
-
-<p align="center">
-  <img src="images/screenshots/mobile-responsive.png" alt="Mobile Responsive Views" width="80%">
-</p>
-
-*Fully optimized for all devices - from 360px (small phones) to 1600px+ (large desktops)*
-
-<details>
-<summary>View More Mobile Screenshots</summary>
-
-<p align="center">
-  <img src="images/screenshots/mobile-homepage.png" alt="Mobile Homepage" width="300">
-  <img src="images/screenshots/mobile-services.png" alt="Mobile Services" width="300">
-  <img src="images/screenshots/mobile-admin.png" alt="Mobile Admin" width="300">
-</p>
-
-</details>
 
 ---
 
