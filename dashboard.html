@@ -967,7 +967,8 @@
                     datasets: [{
                         data: [serviceStatusCounts.Active, serviceStatusCounts.Pending, serviceStatusCounts.Completed],
                         backgroundColor: ['#4caf50', '#ff9800', '#2196f3'],
-                        borderWidth: 0
+                        borderWidth: 2,
+                        borderColor: '#1a1a1a'
                     }]
                 },
                 options: {
@@ -975,7 +976,21 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'bottom'
+                            position: 'bottom',
+                            labels: {
+                                color: '#ffffff',
+                                font: {
+                                    size: 12
+                                },
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: '#dc143c',
+                            borderWidth: 1
                         }
                     }
                 }
@@ -996,15 +1011,20 @@
             spendingChart = new Chart(spendingCtx, {
                 type: 'line',
                 data: {
-                    labels: months,
+                    labels: months.length > 0 ? months : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                     datasets: [{
                         label: 'Spending ($)',
-                        data: amounts,
-                        borderColor: '#0f3460',
-                        backgroundColor: 'rgba(15, 52, 96, 0.1)',
+                        data: amounts.length > 0 ? amounts : [0, 0, 0, 0, 0, 0],
+                        borderColor: '#dc143c',
+                        backgroundColor: 'rgba(220, 20, 60, 0.2)',
                         borderWidth: 3,
                         fill: true,
-                        tension: 0.4
+                        tension: 0.4,
+                        pointBackgroundColor: '#dc143c',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
                     }]
                 },
                 options: {
@@ -1012,14 +1032,47 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false
+                            display: true,
+                            labels: {
+                                color: '#ffffff',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: '#dc143c',
+                            borderWidth: 1
                         }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                callback: function(value) { return '$' + value; }
+                                callback: function(value) { return '$' + value; },
+                                color: '#ffffff',
+                                font: {
+                                    size: 11
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(220, 20, 60, 0.1)',
+                                borderColor: 'rgba(220, 20, 60, 0.3)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#ffffff',
+                                font: {
+                                    size: 11
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(220, 20, 60, 0.05)',
+                                borderColor: 'rgba(220, 20, 60, 0.3)'
                             }
                         }
                     }
