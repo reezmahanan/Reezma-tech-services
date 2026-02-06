@@ -3,44 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard - Reezma Tech</title>
-    <link rel="stylesheet" href="Reezstyle.css?v=2">
+    <title>User Dashboard - Reezma Tech Services</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: var(--dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            min-height: 100vh;
         }
 
         .dashboard-container {
             display: flex;
-            min-height: 100vh;
-            width: 100%;
-            max-width: 100vw;
         }
 
         .sidebar {
-            width: 260px;
-            min-width: 260px;
-            background: rgba(255, 255, 255, 0.03);
-            border-right: 1px solid rgba(220, 20, 60, 0.2);
-            padding: 2rem 0;
             position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            left: 0;
             top: 0;
+            left: 0;
+            height: 100vh;
+            width: 240px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            z-index: 100;
         }
 
         .sidebar-logo {
-            padding: 0 2rem;
-            margin-bottom: 2rem;
+            color: white;
             font-size: 1.8rem;
-            font-weight: 700;
-            font-family: 'Courier New', monospace;
-            color: var(--accent);
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            letter-spacing: 1px;
         }
 
         .sidebar-menu {
             list-style: none;
+            padding: 0 0.75rem;
         }
 
         .sidebar-menu li {
@@ -48,63 +56,69 @@
         }
 
         .sidebar-menu a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 2rem;
-            color: rgba(255, 255, 255, 0.7);
+            display: block;
+            padding: 1rem 1.25rem;
+            color: rgba(255,255,255,0.7);
             text-decoration: none;
+            border-radius: 8px;
             transition: all 0.3s ease;
-            border-left: 3px solid transparent;
+            font-size: 0.95rem;
         }
 
-        .sidebar-menu a:hover,
+        .sidebar-menu a:hover {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            transform: translateX(4px);
+        }
+
         .sidebar-menu a.active {
-            color: var(--accent);
-            background: rgba(220, 20, 60, 0.1);
-            border-left-color: var(--accent);
+            background: linear-gradient(90deg, #0f3460 0%, #16213e 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .main-content {
-            margin-left: 260px;
             flex: 1;
-            padding: 2rem 3rem;
-            width: calc(100% - 260px);
-            max-width: 100%;
-            box-sizing: border-box;
+            margin-left: 240px;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1100;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            font-size: 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(220, 20, 60, 0.2);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .dashboard-title {
-            font-size: 2.2rem;
-            color: var(--light);
-            font-weight: 700;
+            font-size: 2rem;
+            color: #1a1a2e;
         }
 
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-        }
-
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
+            gap: 1rem;
         }
 
         .user-info {
@@ -112,34 +126,62 @@
         }
 
         .user-name {
-            color: var(--light);
             font-weight: 600;
+            color: #1a1a2e;
         }
 
         .user-role {
-            color: rgba(255, 255, 255, 0.6);
             font-size: 0.85rem;
+            color: #666;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            background: linear-gradient(90deg, #e53935 0%, #c62828 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(220, 20, 60, 0.2);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s ease;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .stat-header {
@@ -150,45 +192,44 @@
         }
 
         .stat-icon {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.9rem;
+            color: #666;
         }
 
         .stat-trend {
             font-size: 0.85rem;
-            color: var(--success);
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .stat-trend.down {
+            color: #f44336;
         }
 
         .stat-value {
             font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-bottom: 0.25rem;
         }
 
         .stat-label {
-            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
+            color: #666;
         }
 
         .content-section {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(220, 20, 60, 0.2);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            width: 100%;
-            box-sizing: border-box;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
         }
 
         .section-title {
-            font-size: 1.75rem;
-            color: var(--light);
-            margin-bottom: 2rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
         }
 
         .table-container {
@@ -200,105 +241,264 @@
             border-collapse: collapse;
         }
 
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
-        }
-
         th {
-            color: var(--accent);
+            text-align: left;
+            padding: 1rem;
+            background: #f5f7fa;
             font-weight: 600;
+            color: #1a1a2e;
         }
 
         td {
-            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
         }
 
         .status-badge {
-            padding: 0.25rem 0.75rem;
+            padding: 0.35rem 0.75rem;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         .status-active {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
+            background: #e8f5e9;
+            color: #2e7d32;
         }
 
         .status-pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
+            background: #fff3e0;
+            color: #f57c00;
         }
 
-        .logout-btn {
+        .status-completed {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin: 1.5rem 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #0f3460;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            background: #f0f0f0;
+            transform: translateX(4px);
+        }
+
+        .service-card h3 {
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
             padding: 0.75rem 1.5rem;
-            background: var(--gradient);
             border: none;
             border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #0f3460 0%, #16213e 100%);
             color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 52, 96, 0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            color: #0f3460;
+            border: 2px solid #0f3460;
+        }
+
+        .btn-outline:hover {
+            background: #0f3460;
+            color: white;
+        }
+
+        .notification-item {
+            padding: 1rem;
+            border-left: 4px solid #0f3460;
+            background: #f9f9f9;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .notification-item:hover {
+            background: #f0f0f0;
+        }
+
+        .notification-item.unread {
+            background: #e3f2fd;
+            border-left-color: #1976d2;
+            font-weight: 500;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .notification-time {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .notification-message {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .help-section {
+            margin-bottom: 2rem;
+        }
+
+        .help-section h3 {
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item {
+            background: #f9f9f9;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .logout-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.3);
+        .faq-item:hover {
+            background: #f0f0f0;
         }
 
-        .menu-toggle {
+        .faq-question {
+            font-weight: 600;
+            color: #1a1a2e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
             display: none;
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1001;
-            background: var(--gradient);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #ddd;
+            color: #666;
+            line-height: 1.6;
         }
 
-        @media (max-width: 1400px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .contact-support {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .contact-support h3 {
+            margin-bottom: 1rem;
+        }
+
+        .contact-support p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
         @media (max-width: 1024px) {
-            .dashboard-header {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-
-            .user-profile {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .main-content {
-                width: 260px;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                z-index: 1000;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-                padding: 5rem 1.5
-            }
-
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
@@ -312,6 +512,10 @@
             .main-content {
                 margin-left: 0;
                 padding: 5rem 1rem 2rem;
+            }
+
+            .menu-toggle {
+                display: block;
             }
 
             .dashboard-title {
@@ -351,6 +555,10 @@
             .content-section {
                 padding: 1.25rem;
             }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -360,184 +568,557 @@
         <aside class="sidebar">
             <div class="sidebar-logo">&lt;reezma/&gt;</div>
             <ul class="sidebar-menu">
-                <li><a href="#" class="active" data-section="dashboard">Dashboard</a></li>
-                <li><a href="#" data-section="services">Services</a></li>
-                <li><a href="#" data-section="analytics">Analytics</a></li>
-                <li><a href="#" data-section="billing">Billing</a></li>
-                <li><a href="#" data-section="notifications">Notifications</a></li>
-                <li><a href="#" data-section="settings">Settings</a></li>
-                <li><a href="#" data-section="help">Help & Support</a></li>
-                <li><a href="index.html">Back to Home</a></li>
+                <li><a href="#" class="active" data-section="dashboard">📊 Dashboard</a></li>
+                <li><a href="#" data-section="services">🛠️ My Services</a></li>
+                <li><a href="#" data-section="analytics">📈 Analytics</a></li>
+                <li><a href="#" data-section="billing">💳 Billing</a></li>
+                <li><a href="#" data-section="notifications">🔔 Notifications</a></li>
+                <li><a href="#" data-section="settings">⚙️ Settings</a></li>
+                <li><a href="#" data-section="help">❓ Help & Support</a></li>
+                <li><a href="index.html">🏠 Back to Home</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
             <div class="dashboard-header">
                 <h1 class="dashboard-title">Welcome Back, User!</h1>
-                <div class="user-profile" id="user-profile">
-                    <!-- Filled by JS -->
-                </div>
+                <div class="user-profile" id="user-profile"></div>
             </div>
+
             <div id="dashboard-sections">
+                <!-- DASHBOARD SECTION -->
                 <div id="section-dashboard">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">Projects</span>
-                                <span class="stat-trend">↑ 12%</span>
-                            </div>
-                            <div class="stat-value">24</div>
-                            <div class="stat-label">Active Projects</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">Hours</span>
-                                <span class="stat-trend">↑ 8%</span>
-                            </div>
-                            <div class="stat-value">156h</div>
-                            <div class="stat-label">Total Hours</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">Rate</span>
-                                <span class="stat-trend">↑ 24%</span>
-                            </div>
-                            <div class="stat-value">89%</div>
-                            <div class="stat-label">Completion Rate</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">Total</span>
-                                <span class="stat-trend">↑ 18%</span>
-                            </div>
-                            <div class="stat-value">$12.5K</div>
-                            <div class="stat-label">Total Spent</div>
-                        </div>
-                    </div>
+                    <div class="stats-grid" id="stats-grid"></div>
+                    
                     <div class="content-section">
-                        <h2 class="section-title">Recent Services</h2>
+                        <h2 class="section-title">Recent Activity</h2>
                         <div class="table-container">
-                            <table>
+                            <table id="recent-activity-table">
                                 <thead>
                                     <tr>
-                                        <th>Service</th>
+                                        <th>Activity</th>
                                         <th>Date</th>
                                         <th>Status</th>
-                                        <th>Amount</th>
+                                        <th>Details</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Cloud Migration</td>
-                                        <td>Jan 18, 2026</td>
-                                        <td><span class="status-badge status-active">Active</span></td>
-                                        <td>$3,200</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Security Audit</td>
-                                        <td>Jan 15, 2026</td>
-                                        <td><span class="status-badge status-pending">Pending</span></td>
-                                        <td>$1,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Custom Development</td>
-                                        <td>Jan 10, 2026</td>
-                                        <td><span class="status-badge status-active">Active</span></td>
-                                        <td>$5,800</td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="recent-activity-body"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+
+                <!-- SERVICES SECTION -->
                 <div id="section-services" style="display:none;">
                     <div class="content-section">
-                        <h2 class="section-title">Your Services</h2>
-                        <p>View and manage all your active and past services here.</p>
-                        <!-- Add your services content here -->
+                        <h2 class="section-title">My Services</h2>
+                        <div class="services-grid" id="services-grid"></div>
                     </div>
                 </div>
+
+                <!-- ANALYTICS SECTION -->
                 <div id="section-analytics" style="display:none;">
                     <div class="content-section">
-                        <h2 class="section-title">Analytics</h2>
-                        <p>Track your usage, performance, and trends.</p>
-                        <!-- Add analytics charts or stats here -->
+                        <h2 class="section-title">Service Analytics</h2>
+                        <div class="chart-container">
+                            <canvas id="servicesChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <h2 class="section-title">Spending Overview</h2>
+                        <div class="chart-container">
+                            <canvas id="spendingChart"></canvas>
+                        </div>
                     </div>
                 </div>
+
+                <!-- BILLING SECTION -->
                 <div id="section-billing" style="display:none;">
                     <div class="content-section">
-                        <h2 class="section-title">Billing</h2>
-                        <p>View invoices, payment history, and manage billing details.</p>
-                        <!-- Add billing info here -->
+                        <h2 class="section-title">Payment History</h2>
+                        <div class="table-container">
+                            <table id="billing-table">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice ID</th>
+                                        <th>Date</th>
+                                        <th>Service</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="billing-body"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
+                <!-- NOTIFICATIONS SECTION -->
                 <div id="section-notifications" style="display:none;">
                     <div class="content-section">
                         <h2 class="section-title">Notifications</h2>
-                        <p>See your latest alerts and messages.</p>
-                        <!-- Add notifications here -->
+                        <div id="notifications-list"></div>
                     </div>
                 </div>
+
+                <!-- SETTINGS SECTION -->
                 <div id="section-settings" style="display:none;">
                     <div class="content-section">
-                        <h2 class="section-title">Settings</h2>
-                        <p>Update your profile, preferences, and account settings.</p>
-                        <!-- Add settings form here -->
+                        <h2 class="section-title">Profile Settings</h2>
+                        <form id="profile-form">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="setting-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="setting-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="setting-phone">
+                            </div>
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" id="setting-company">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="content-section">
+                        <h2 class="section-title">Change Password</h2>
+                        <form id="password-form">
+                            <div class="form-group">
+                                <label>Current Password</label>
+                                <input type="password" id="current-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" id="new-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm New Password</label>
+                                <input type="password" id="confirm-password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </form>
                     </div>
                 </div>
+
+                <!-- HELP SECTION -->
                 <div id="section-help" style="display:none;">
                     <div class="content-section">
-                        <h2 class="section-title">Help & Support</h2>
-                        <p>Find answers or contact support for assistance.</p>
-                        <!-- Add help/support content here -->
+                        <h2 class="section-title">Frequently Asked Questions</h2>
+                        <div class="help-section">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    How do I track my service progress?
+                                    <span class="faq-toggle">+</span>
+                                </div>
+                                <div class="faq-answer">
+                                    You can track all your active services in the "My Services" section. Each service card shows its current status, progress, and estimated completion date.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    How do I view my invoices?
+                                    <span class="faq-toggle">+</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Navigate to the "Billing" section to see all your payment history, invoices, and transaction details. You can download invoices as PDF files.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Can I request additional services?
+                                    <span class="faq-toggle">+</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Yes! Contact our support team through the contact form on the homepage or email us at info@reezma.com to discuss additional services.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    How do I update my profile information?
+                                    <span class="faq-toggle">+</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Go to the "Settings" section where you can update your name, email, phone, company information, and change your password.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    What if I encounter technical issues?
+                                    <span class="faq-toggle">+</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Please contact our support team immediately at support@reezma.com or call us at +1 (555) 123-4567. We're available 24/7 to assist you.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-support">
+                        <h3>Still Need Help?</h3>
+                        <p>Our support team is here to assist you 24/7</p>
+                        <button class="btn" style="background: white; color: #0f3460;" onclick="window.location.href='index.html#contact'">Contact Support</button>
                     </div>
                 </div>
             </div>
         </main>
-        <script>
-        // Sidebar navigation logic
+    </div>
+
+    <script>
+        // Initialize charts variable
+        let servicesChart = null;
+        let spendingChart = null;
+
+        // Sidebar navigation
         const sidebarLinks = document.querySelectorAll('.sidebar-menu a[data-section]');
-        const sections = [
-            'dashboard', 'services', 'analytics', 'billing', 'notifications', 'settings', 'help'
-        ];
+        const sections = ['dashboard', 'services', 'analytics', 'billing', 'notifications', 'settings', 'help'];
+        
         sidebarLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                // Remove active from all
                 sidebarLinks.forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
-                // Hide all sections
                 sections.forEach(sec => {
-                    document.getElementById('section-' + sec).style.display = 'none';
+                    const el = document.getElementById('section-' + sec);
+                    if (el) el.style.display = 'none';
                 });
-                // Show selected section
-                document.getElementById('section-' + this.dataset.section).style.display = '';
+                const targetSection = document.getElementById('section-' + this.dataset.section);
+                if (targetSection) {
+                    targetSection.style.display = '';
+                    if (this.dataset.section === 'analytics') {
+                        renderCharts();
+                    }
+                }
+                // Close mobile menu
+                document.querySelector('.sidebar').classList.remove('active');
             });
         });
 
-        // User info logic
+        // Get initials for avatar
         function getInitials(name) {
             if (!name) return '';
-            return name.split(/\s|\./).filter(Boolean).map(n => n[0].toUpperCase()).join('').slice(0,2);
+            return name.split(/\s|\./).filter(Boolean).map(n => n[0].toUpperCase()).join('').slice(0, 2);
         }
+
+        // Render user profile
         function renderUserProfile() {
             const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
             if (!user.email) {
                 window.location.href = 'login.html';
                 return;
             }
-            document.querySelector('.dashboard-title').textContent = `Welcome Back, ${user.name || user.email}!`;
+            
+            // Check if user is admin and redirect to admin dashboard
+            if (user.role === 'admin') {
+                window.location.href = 'admin.html';
+                return;
+            }
+
+            document.querySelector('.dashboard-title').textContent = `Welcome Back, ${user.name || user.email.split('@')[0]}!`;
             document.getElementById('user-profile').innerHTML = `
                 <div class="user-info">
                     <div class="user-name">${user.name || user.email}</div>
-                    <div class="user-role">${user.role === 'admin' ? 'Admin' : 'Standard User'}</div>
+                    <div class="user-role">Standard User</div>
                 </div>
                 <div class="user-avatar">${getInitials(user.name || user.email)}</div>
-                <button class="logout-btn" onclick="localStorage.removeItem('reezma_current_user');window.location.href='login.html'">Logout</button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
             `;
         }
+
+        function logout() {
+            localStorage.removeItem('reezma_current_user');
+            window.location.href = 'login.html';
+        }
+
+        // Load dashboard stats
+        function loadDashboardStats() {
+            const services = JSON.parse(localStorage.getItem('reezma_services') || '[]');
+            const payments = JSON.parse(localStorage.getItem('reezma_payments') || '[]');
+            const projects = JSON.parse(localStorage.getItem('reezma_projects') || '[]');
+            
+            const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
+            const userServices = services.filter(s => s.clientEmail === user.email || s.userId === user.id);
+            const userPayments = payments.filter(p => p.clientEmail === user.email || p.userId === user.id);
+            const userProjects = projects.filter(p => p.clientEmail === user.email || p.userId === user.id);
+
+            const activeServices = userServices.filter(s => s.status === 'Active').length;
+            const totalSpent = userPayments.reduce((sum, p) => sum + parseFloat(p.amount || 0), 0);
+            const completedProjects = userProjects.filter(p => p.status === 'Completed').length;
+            const completionRate = userProjects.length > 0 ? Math.round((completedProjects / userProjects.length) * 100) : 0;
+
+            document.getElementById('stats-grid').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon">Services</span>
+                        <span class="stat-trend">↑ 12%</span>
+                    </div>
+                    <div class="stat-value">${activeServices}</div>
+                    <div class="stat-label">Active Services</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon">Projects</span>
+                        <span class="stat-trend">↑ 8%</span>
+                    </div>
+                    <div class="stat-value">${userProjects.length}</div>
+                    <div class="stat-label">Total Projects</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon">Rate</span>
+                        <span class="stat-trend">↑ 24%</span>
+                    </div>
+                    <div class="stat-value">${completionRate}%</div>
+                    <div class="stat-label">Completion Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon">Total</span>
+                        <span class="stat-trend">↑ 18%</span>
+                    </div>
+                    <div class="stat-value">$${totalSpent.toLocaleString()}</div>
+                    <div class="stat-label">Total Spent</div>
+                </div>
+            `;
+        }
+
+        // Load recent activity
+        function loadRecentActivity() {
+            const services = JSON.parse(localStorage.getItem('reezma_services') || '[]');
+            const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
+            const userServices = services.filter(s => s.clientEmail === user.email || s.userId === user.id).slice(0, 5);
+
+            const tbody = document.getElementById('recent-activity-body');
+            if (userServices.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#999;">No recent activity</td></tr>';
+            } else {
+                tbody.innerHTML = userServices.map(service => `
+                    <tr>
+                        <td>${service.name}</td>
+                        <td>${new Date(service.date || Date.now()).toLocaleDateString()}</td>
+                        <td><span class="status-badge status-${service.status.toLowerCase()}">${service.status}</span></td>
+                        <td>$${parseFloat(service.price || 0).toLocaleString()}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Load services section
+        function loadServices() {
+            const services = JSON.parse(localStorage.getItem('reezma_services') || '[]');
+            const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
+            const userServices = services.filter(s => s.clientEmail === user.email || s.userId === user.id);
+
+            const grid = document.getElementById('services-grid');
+            if (userServices.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No services yet</p></div>';
+            } else {
+                grid.innerHTML = userServices.map(service => `
+                    <div class="service-card">
+                        <h3>${service.name}</h3>
+                        <p>${service.description || 'Professional service tailored to your needs'}</p>
+                        <span class="status-badge status-${service.status.toLowerCase()}">${service.status}</span>
+                        <div class="service-meta">
+                            <span>${new Date(service.date || Date.now()).toLocaleDateString()}</span>
+                            <span>$${parseFloat(service.price || 0).toLocaleString()}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Render analytics charts
+        function renderCharts() {
+            const services = JSON.parse(localStorage.getItem('reezma_services') || '[]');
+            const payments = JSON.parse(localStorage.getItem('reezma_payments') || '[]');
+            const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
+            
+            const userServices = services.filter(s => s.clientEmail === user.email || s.userId === user.id);
+            const userPayments = payments.filter(p => p.clientEmail === user.email || p.userId === user.id);
+
+            // Services Chart
+            const serviceStatusCounts = {
+                Active: userServices.filter(s => s.status === 'Active').length,
+                Pending: userServices.filter(s => s.status === 'Pending').length,
+                Completed: userServices.filter(s => s.status === 'Completed').length
+            };
+
+            if (servicesChart) servicesChart.destroy();
+            const serviceCtx = document.getElementById('servicesChart').getContext('2d');
+            servicesChart = new Chart(serviceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Active', 'Pending', 'Completed'],
+                    datasets: [{
+                        data: [serviceStatusCounts.Active, serviceStatusCounts.Pending, serviceStatusCounts.Completed],
+                        backgroundColor: ['#4caf50', '#ff9800', '#2196f3'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Spending Chart
+            const monthlySpending = {};
+            userPayments.forEach(payment => {
+                const month = new Date(payment.date || Date.now()).toLocaleDateString('en-US', {month: 'short', year: 'numeric'});
+                monthlySpending[month] = (monthlySpending[month] || 0) + parseFloat(payment.amount || 0);
+            });
+
+            const months = Object.keys(monthlySpending).slice(-6);
+            const amounts = months.map(m => monthlySpending[m]);
+
+            if (spendingChart) spendingChart.destroy();
+            const spendingCtx = document.getElementById('spendingChart').getContext('2d');
+            spendingChart = new Chart(spendingCtx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Spending ($)',
+                        data: amounts,
+                        borderColor: '#0f3460',
+                        backgroundColor: 'rgba(15, 52, 96, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return '$' + value; }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load billing
+        function loadBilling() {
+            const payments = JSON.parse(localStorage.getItem('reezma_payments') || '[]');
+            const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
+            const userPayments = payments.filter(p => p.clientEmail === user.email || p.userId === user.id);
+
+            const tbody = document.getElementById('billing-body');
+            if (userPayments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#999;">No payment history</td></tr>';
+            } else {
+                tbody.innerHTML = userPayments.map(payment => `
+                    <tr>
+                        <td>#${payment.id || Math.random().toString(36).substr(2, 9).toUpperCase()}</td>
+                        <td>${new Date(payment.date || Date.now()).toLocaleDateString()}</td>
+                        <td>${payment.service || 'Service'}</td>
+                        <td>$${parseFloat(payment.amount || 0).toLocaleString()}</td>
+                        <td><span class="status-badge status-completed">${payment.status || 'Paid'}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Load notifications
+        function loadNotifications() {
+            const notifications = [
+                {title: 'Service Update', message: 'Your cloud migration service is 75% complete', time: '2 hours ago', unread: true},
+                {title: 'Payment Confirmed', message: 'Payment of $3,200 has been processed', time: '1 day ago', unread: false},
+                {title: 'New Message', message: 'You have a message from support team', time: '2 days ago', unread: true},
+                {title: 'Project Completed', message: 'Custom development project has been delivered', time: '3 days ago', unread: false}
+            ];
+
+            const container = document.getElementById('notifications-list');
+            if (notifications.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔔</div><p>No notifications</p></div>';
+            } else {
+                container.innerHTML = notifications.map(notif => `
+                    <div class="notification-item ${notif.unread ? 'unread' : ''}">
+                        <div class="notification-header">
+                            <span class="notification-title">${notif.title}</span>
+                            <span class="notification-time">${notif.time}</span>
+                        </div>
+                        <div class="notification-message">${notif.message}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Load settings
+        function loadSettings() {
+            const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
+            document.getElementById('setting-name').value = user.name || '';
+            document.getElementById('setting-email').value = user.email || '';
+            document.getElementById('setting-phone').value = user.phone || '';
+            document.getElementById('setting-company').value = user.company || '';
+        }
+
+        // Profile form submission
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = JSON.parse(localStorage.getItem('reezma_current_user') || '{}');
+            user.name = document.getElementById('setting-name').value;
+            user.email = document.getElementById('setting-email').value;
+            user.phone = document.getElementById('setting-phone').value;
+            user.company = document.getElementById('setting-company').value;
+            localStorage.setItem('reezma_current_user', JSON.stringify(user));
+            alert('Profile updated successfully!');
+            renderUserProfile();
+        });
+
+        // Password form submission
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (newPassword !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters!');
+                return;
+            }
+            
+            alert('Password updated successfully!');
+            this.reset();
+        });
+
+        // FAQ toggle
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Initialize dashboard
         renderUserProfile();
-        </script>
-    </div>
+        loadDashboardStats();
+        loadRecentActivity();
+        loadServices();
+        loadBilling();
+        loadNotifications();
+        loadSettings();
+    </script>
 </body>
 </html>
