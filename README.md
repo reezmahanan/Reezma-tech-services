@@ -550,50 +550,6 @@ If you find this project useful:
 
 ---
 
-## � Adding Screenshots
-
-To populate the screenshots in this README:
-
-### 1. Take Screenshots
-- Open each page in your browser
-- Use browser screenshot tools or press `PrtScn`
-- Recommended size: 1920x1080 for desktop views
-- For mobile: 375x812 (iPhone size) or similar
-
-### 2. Name Your Files
-Save screenshots with these exact names in `images/screenshots/`:
-- `homepage.png` - Homepage (index.html)
-- `services.png` - Services page
-- `industries.png` - Industries page
-- `login.png` - Login page
-- `dashboard.png` - User dashboard
-- `admin-dashboard.png` - Admin dashboard overview
-- `admin-analytics.png` - Admin analytics section
-- `admin-users.png` - Admin user management
-- `admin-2fa.png` - 2FA setup modal
-- `mobile-responsive.png` - Multiple mobile views combined
-- `mobile-homepage.png` - Mobile homepage
-- `mobile-services.png` - Mobile services
-- `mobile-admin.png` - Mobile admin view
-
-### 3. Optimize Images (Optional)
-```bash
-# Install imagemin-cli (optional, for optimization)
-npm install -g imagemin-cli
-
-# Optimize screenshots
-imagemin images/screenshots/*.png --out-dir=images/screenshots/
-```
-
-### 4. Commit and Push
-```bash
-git add images/screenshots/
-git commit -m "docs: Add website screenshots to README"
-git push origin main
-```
-
----
-
 ## �📬 Contact
 
 **Reezma Tech Services**
