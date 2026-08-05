@@ -1,7 +1,7 @@
 # Reezma Tech Services
 
 <p align="center">
-  <strong>Professional IT Solutions for Modern Businesses</strong>
+  <strong>Unique Professional IT Solutions for Modern Businesses</strong>
 </p>
 
 <p align="center">
