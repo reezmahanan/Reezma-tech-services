@@ -565,8 +565,4 @@ This project is available for personal and commercial use.
 
 ---
 
-Made with ❤️ and dedication to quality code
-
-**Latest Update:** February 2026 - Complete Admin Dashboard with Real-time Monitoring, Analytics Charts, and 2FA Security
-
 © 2026 Reezma Tech. All rights reserved.
